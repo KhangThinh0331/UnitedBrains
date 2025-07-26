@@ -24,19 +24,182 @@
                 </div>
             </div>
         </nav>
-        <section class="row">
-            <aside class="col-sm-4 p-5">Side bar</aside>
-            <article class="col-sm-8 p-5">
-                
-            </article>
+        <section class="container" style="background-color: #f2f1ff; max-width: 100%; margin-top: 0; padding-top: 0;">
+            <div class="row">
+                <aside class="col-sm-4 p-5">Side bar</aside>
+                <article class="col-sm-8 p-5">
+
+                    <div id="carouselExample" class="carousel slide carousel-fade" data-bs-ride="carousel"
+                        data-bs-interval="5000">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <a href="#">
+                                    <div class="carousel-img-wrapper">
+                                        <img :src="item[1].image" class="carousel-img d-block w-100" alt="Ảnh 1" />
+                                        <div class="caption">Cruel Summer</div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="carousel-item">
+                                <a href="#">
+                                    <div class="carousel-img-wrapper">
+                                        <img :src="item[2].image" class="carousel-img d-block w-100" alt="Ảnh 2" />
+                                        <div class="caption">春泥棒</div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="carousel-item">
+                                <a href="#">
+                                    <div class="carousel-img-wrapper">
+                                        <img :src="item[3].image" class="carousel-img d-block w-100" alt="Ảnh 3" />
+                                        <div class="caption">Lovesick Girls</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Điều khiển trái/phải -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </button>
+
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </button>
+                    </div>
+
+                    <br>
+                    <h2 class="mb-3" style="color: #42399f;">Bài hát nổi bật</h2>
+                    <div class="card p-3" style="background-color: #3f3d56; color: #fff;">
+                        <div class="d-flex flex-wrap gap-3 justify-content-start">
+                            <div class="text-center" style="width: 200px;">
+                                <img :src="item[4].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
+                                    class="rounded-circle mb-2" />
+                                <p class="card-text fs-5">
+                                    ただ君に晴れ
+                                </p>
+                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-play-fill"></i> </button> <button
+                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-plus"></i> </button>
+                            </div>
+                            <div class="text-center" style="width: 200px;">
+                                <img :src="item[5].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
+                                    class="rounded-circle mb-2" />
+                                <p class="card-text fs-5">
+                                    What is Love?
+                                </p>
+                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-play-fill"></i> </button> <button
+                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-plus"></i> </button>
+                            </div>
+                            <div class="text-center" style="width: 200px;">
+                                <img :src="item[6].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
+                                    class="rounded-circle mb-2" />
+                                <p class="card-text fs-5">
+                                    Love Story
+                                </p>
+                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-play-fill"></i> </button> <button
+                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-plus"></i> </button>
+                            </div>
+                            <div class="text-center" style="width: 200px;">
+                                <img :src="item[7].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
+                                    class="rounded-circle mb-2" />
+                                <p class="card-text fs-5">
+                                    Bắc Bling
+                                </p>
+                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-play-fill"></i> </button> <button
+                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-plus"></i> </button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <h2 class="mb-3" style="color: #42399f;">Nghệ sĩ nổi bật</h2>
+                    <div class="card p-3" style="background-color: #3f3d56; color: #fff;">
+                        <div class="d-flex flex-wrap gap-3 justify-content-start">
+                            <div class="text-center" style="width: 200px;">
+                                <img :src="item[8].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
+                                    class="rounded-circle mb-2" />
+                                <p class="card-text fs-5">
+                                    ヨルシカ
+                                </p>
+                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-plus"></i> </button>
+                            </div>
+                            <div class="text-center" style="width: 200px;">
+                                <img :src="item[9].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
+                                    class="rounded-circle mb-2" />
+                                <p class="card-text fs-5">
+                                    Taylor Swift
+                                </p>
+                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-plus"></i> </button>
+                            </div>
+                            <div class="text-center" style="width: 200px;">
+                                <img :src="item[10].image" alt=""
+                                    style="width: 150px; height: 150px; object-fit: cover;"
+                                    class="rounded-circle mb-2" />
+                                <p class="card-text fs-5">
+                                    BLACKPINK
+                                </p>
+                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-plus"></i> </button>
+                            </div>
+                            <div class="text-center" style="width: 200px;">
+                                <img :src="item[11].image" alt=""
+                                    style="width: 150px; height: 150px; object-fit: cover;"
+                                    class="rounded-circle mb-2" />
+                                <p class="card-text fs-5">
+                                    Ado
+                                </p>
+                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-plus"></i> </button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
         </section>
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import logo from '../assets/images/musicLogo.png'
-const item = ref([{ image: logo }]) 
+import img1 from '../assets/images/musicLogo.png'
+import img2 from '../assets/images/taylorswiftlover.jpg'
+import img3 from '../assets/images/harudorobou.jpg'
+import img4 from '../assets/images/lovesickgirls.jpg'
+import img5 from '../assets/images/tadakiminihare.jpg'
+import img6 from '../assets/images/whatislove.jpg'
+import img7 from '../assets/images/lovestory.png'
+import img8 from '../assets/images/bacbling.jpg'
+import img9 from '../assets/images/yorushika.jpg'
+import img10 from '../assets/images/taylorswift.jpg'
+import img11 from '../assets/images/blackpink.jpg'
+import img12 from '../assets/images/ado.jpg'
+const item = ref([
+    { image: img1 },
+    { image: img2 },
+    { image: img3 },
+    { image: img4 },
+    { image: img5 },
+    { image: img6 },
+    { image: img7 },
+    { image: img8 },
+    { image: img9 },
+    { image: img10 },
+    { image: img11 },
+    { image: img12 }
+]) 
 </script>
 
 <style scoped>
@@ -60,9 +223,11 @@ body {
     background-color: #3f3d56 !important;
     font-size: large;
 }
-.tab-content .container{
+
+.tab-content .container {
     max-width: 90% !important;
 }
+
 .container {
     margin-top: 40px;
 }
@@ -72,6 +237,63 @@ h3 {
     font-weight: 600;
     text-align: center;
     margin-bottom: 30px;
+}
+
+.carousel-img-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(63, 61, 86, 0.25);
+
+  height: 400px; /* Cố định chiều cao */
+}
+
+.carousel-img {
+  border: 4px solid #ff38ca;
+  border-radius: 20px;
+  transition: transform 2s ease;
+
+  width: 100%;
+  height: 100%; /* cho ảnh đầy container */
+  object-fit: cover; /* giữ tỉ lệ, cắt nếu cần */
+}
+
+/* Hiệu ứng zoom khi ảnh active */
+.carousel-item.active .carousel-img {
+  transform: scale(1.05);
+}
+
+/* Caption mờ lên từ dưới */
+.caption {
+  position: absolute;
+  bottom: 20px;
+  left: 30px;
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: 'Pacifico', cursive;
+  color: #ff38ca; /* Màu hồng nổi bật */
+  background-color: rgba(0, 0, 0, 0.6); /* Nền tối hơn */
+  padding: 8px 16px;
+  border-radius: 10px;
+  text-shadow: 3px 3px 8px rgba(0,0,0,0.95); /* Bóng chữ đậm hơn */
+  animation: fadeInUp 1.2s ease forwards;
+  opacity: 0;
+  -webkit-text-fill-color: unset;
+}
+
+.carousel-item.active .caption {
+  opacity: 1;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .form-control,
@@ -123,5 +345,44 @@ h3 {
 .nav-tabs .nav-link {
     color: #ff38ca;
     font-weight: 500;
+}
+
+.carousel-item img {
+    transition: transform 4s ease;
+}
+
+.carousel-item.active img {
+    transform: scale(1.05);
+}
+
+.pink-button {
+    background-color: #ffc0e0;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.pink-button i {
+    color: #ff38ca;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.pink-button:hover {
+    background-color: #ffaad8;
+    /* màu hồng đậm hơn khi hover */
+    transform: scale(1.1);
+    /* phóng to nhẹ toàn bộ nút */
+}
+
+.pink-button:hover i {
+    color: #e60099;
+    /* đổi màu icon khi hover */
+    transform: scale(1.2);
+    /* phóng to icon nhẹ */
+}
+
+.card img:hover {
+  transform: scale(1.1);
+  transition: transform 0.8s ease;
 }
 </style>
