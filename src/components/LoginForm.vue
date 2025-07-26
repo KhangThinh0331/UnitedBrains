@@ -5,29 +5,7 @@
                 <a class="navbar-brand" href="">
                     <img :src="item[0].image" alt="" style="width: 150px;" />
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapsibleNavbar">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fa-solid fa-film"></i>Bài hát</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i>Nghệ sĩ</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                <i class="fa-solid fa-user"></i> Tài khoản
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="LoginForm.vue">Đăng nhập</a></li>
-                                <li><a class="dropdown-item" href="#">Quên mật khẩu</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+                <h1 style="color: white;" class="mx-auto">Spotifast</h1>
             </div>
         </nav>
         <section>
@@ -143,10 +121,6 @@ body {
     color: #ffffff !important;
 }
 
-.dropdown-menu {
-    background-color: #3f3d56 !important;
-    font-size: large;
-}
 .tab-content .container{
     max-width: 90% !important;
 }

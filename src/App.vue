@@ -1,9 +1,9 @@
 <script setup>
-import LoginForm from './components/LoginForm.vue'
+import index from './components/index.vue'
 </script>
 
 <template>
-  <LoginForm></LoginForm>
+  <index></index>
 </template>
 
 <style scoped>
