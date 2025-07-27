@@ -1,9 +1,9 @@
 <script setup>
-import index from './components/index.vue'
+import song from './components/Artist.vue'
 </script>
 
 <template>
-  <index></index>
+  <song></song>
 </template>
 
 <style scoped>

@@ -54,7 +54,7 @@
                             <ul class="list-group">
                                 <li class="list-group-item d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[12].image" alt=""
+                                        <img :src="item[1].image" alt=""
                                             style="width: 75px; height: 75px; object-fit: cover;"
                                             class="rounded-circle" />
                                         <span>ただ君に晴れ</span>
@@ -73,7 +73,7 @@
 
                                 <li class="list-group-item d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[13].image" alt=""
+                                        <img :src="item[2].image" alt=""
                                             style="width: 75px; height: 75px; object-fit: cover;"
                                             class="rounded-circle" />
                                         <span>Love Story</span>
@@ -92,7 +92,7 @@
 
                                 <li class="list-group-item d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[14].image" alt=""
+                                        <img :src="item[3].image" alt=""
                                             style="width: 75px; height: 75px; object-fit: cover;"
                                             class="rounded-circle" />
                                         <span>Bắc Bling</span>
@@ -116,7 +116,7 @@
                             <ul class="list-group">
                                 <li class="list-group-item d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[15].image" alt=""
+                                        <img :src="item[4].image" alt=""
                                             style="width: 75px; height: 75px; object-fit: cover;"
                                             class="rounded-circle" />
                                         <span>ヨルシカ</span>
@@ -131,7 +131,7 @@
 
                                 <li class="list-group-item d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[16].image" alt=""
+                                        <img :src="item[5].image" alt=""
                                             style="width: 75px; height: 75px; object-fit: cover;"
                                             class="rounded-circle" />
                                         <span>Taylor Swift</span>
@@ -147,7 +147,7 @@
 
                                 <li class="list-group-item d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[17].image" alt=""
+                                        <img :src="item[6].image" alt=""
                                             style="width: 75px; height: 75px; object-fit: cover;"
                                             class="rounded-circle" />
                                         <span>Ado</span>
@@ -167,120 +167,47 @@
 
                 </aside>
                 <article class="col-sm-8 p-5">
-
-                    <div id="carouselExample" class="carousel slide carousel-fade" data-bs-ride="carousel"
-                        data-bs-interval="5000">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <a href="#">
-                                    <div class="carousel-img-wrapper">
-                                        <img :src="item[1].image" class="carousel-img d-block w-100" alt="Ảnh 1" />
-                                        <div class="caption">Cruel Summer</div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="carousel-item">
-                                <a href="#">
-                                    <div class="carousel-img-wrapper">
-                                        <img :src="item[2].image" class="carousel-img d-block w-100" alt="Ảnh 2" />
-                                        <div class="caption">春泥棒</div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="carousel-item">
-                                <a href="#">
-                                    <div class="carousel-img-wrapper">
-                                        <img :src="item[3].image" class="carousel-img d-block w-100" alt="Ảnh 3" />
-                                        <div class="caption">Lovesick Girls</div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Điều khiển trái/phải -->
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        </button>
-
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        </button>
+                    <div class="input-group mb-3 custom-search">
+                        <span class="input-group-text border-0 bg-transparent text-white">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" class="form-control custom-search-input" placeholder="Tìm kiếm bài hát..."
+                            id="searchInput" />
                     </div>
-
-                    <br>
-                    <h2 class="mb-3" style="color: #42399f;">Bài hát nổi bật</h2>
+                    <h2 class="mb-3" style="color: #42399f;">Danh sách bài hát</h2>
                     <div class="card p-3" style="background-color: #3f3d56; color: #fff;">
                         <div class="d-flex flex-wrap gap-3 justify-content-start">
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[4].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    ただ君に晴れ
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[5].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    What is Love?
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[6].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    Love Story
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
                             <div class="text-center" style="width: 200px;">
                                 <img :src="item[7].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
                                     class="rounded-circle mb-2" />
                                 <p class="card-text fs-5">
-                                    Bắc Bling
+                                    晴る
                                 </p>
                                 <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
                                         class="bi bi-play-fill"></i> </button> <button
                                     class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
                                         class="bi bi-plus"></i> </button>
                             </div>
-                        </div>
-                    </div>
-                    <br>
-                    <h2 class="mb-3" style="color: #42399f;">Nghệ sĩ nổi bật</h2>
-                    <div class="card p-3" style="background-color: #3f3d56; color: #fff;">
-                        <div class="d-flex flex-wrap gap-3 justify-content-start">
                             <div class="text-center" style="width: 200px;">
                                 <img :src="item[8].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
                                     class="rounded-circle mb-2" />
                                 <p class="card-text fs-5">
-                                    ヨルシカ
+                                   アイドル
                                 </p>
                                 <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-play-fill"></i> </button> <button
+                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
                                         class="bi bi-plus"></i> </button>
                             </div>
                             <div class="text-center" style="width: 200px;">
                                 <img :src="item[9].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
                                     class="rounded-circle mb-2" />
                                 <p class="card-text fs-5">
-                                    Taylor Swift
+                                    うっせぇわ
                                 </p>
                                 <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-play-fill"></i> </button> <button
+                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
                                         class="bi bi-plus"></i> </button>
                             </div>
                             <div class="text-center" style="width: 200px;">
@@ -288,9 +215,11 @@
                                     style="width: 150px; height: 150px; object-fit: cover;"
                                     class="rounded-circle mb-2" />
                                 <p class="card-text fs-5">
-                                    BLACKPINK
+                                    Show
                                 </p>
                                 <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-play-fill"></i> </button> <button
+                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
                                         class="bi bi-plus"></i> </button>
                             </div>
                             <div class="text-center" style="width: 200px;">
@@ -298,9 +227,95 @@
                                     style="width: 150px; height: 150px; object-fit: cover;"
                                     class="rounded-circle mb-2" />
                                 <p class="card-text fs-5">
-                                    Ado
+                                    紅蓮華
                                 </p>
                                 <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-play-fill"></i> </button> <button
+                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-plus"></i> </button>
+                            </div>
+                            <div class="text-center" style="width: 200px;">
+                                <img :src="item[12].image" alt=""
+                                    style="width: 150px; height: 150px; object-fit: cover;"
+                                    class="rounded-circle mb-2" />
+                                <p class="card-text fs-5">
+                                    夜に駆ける
+                                </p>
+                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-play-fill"></i> </button> <button
+                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-plus"></i> </button>
+                            </div>
+                            <div class="text-center" style="width: 200px;">
+                                <img :src="item[13].image" alt=""
+                                    style="width: 150px; height: 150px; object-fit: cover;"
+                                    class="rounded-circle mb-2" />
+                                <p class="card-text fs-5">
+                                    Lion Heart
+                                </p>
+                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-play-fill"></i> </button> <button
+                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-plus"></i> </button>
+                            </div>
+                            <div class="text-center" style="width: 200px;">
+                                <img :src="item[14].image" alt=""
+                                    style="width: 150px; height: 150px; object-fit: cover;"
+                                    class="rounded-circle mb-2" />
+                                <p class="card-text fs-5">
+                                    Unstoppable
+                                </p>
+                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-play-fill"></i> </button> <button
+                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-plus"></i> </button>
+                            </div>
+                            <div class="text-center" style="width: 200px;">
+                                <img :src="item[15].image" alt=""
+                                    style="width: 150px; height: 150px; object-fit: cover;"
+                                    class="rounded-circle mb-2" />
+                                <p class="card-text fs-5">
+                                    Blank Space
+                                </p>
+                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-play-fill"></i> </button> <button
+                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-plus"></i> </button>
+                            </div>
+                            <div class="text-center" style="width: 200px;">
+                                <img :src="item[16].image" alt=""
+                                    style="width: 150px; height: 150px; object-fit: cover;"
+                                    class="rounded-circle mb-2" />
+                                <p class="card-text fs-5">
+                                    Legends Never Die
+                                </p>
+                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-play-fill"></i> </button> <button
+                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-plus"></i> </button>
+                            </div>
+                            <div class="text-center" style="width: 200px;">
+                                <img :src="item[17].image" alt=""
+                                    style="width: 150px; height: 150px; object-fit: cover;"
+                                    class="rounded-circle mb-2" />
+                                <p class="card-text fs-5">
+                                    Hope Is the Thing With Feathers
+                                </p>
+                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-play-fill"></i> </button> <button
+                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-plus"></i> </button>
+                            </div>
+                            <div class="text-center" style="width: 200px;">
+                                <img :src="item[18].image" alt=""
+                                    style="width: 150px; height: 150px; object-fit: cover;"
+                                    class="rounded-circle mb-2" />
+                                <p class="card-text fs-5">
+                                    You Didn't Know
+                                </p>
+                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                        class="bi bi-play-fill"></i> </button> <button
+                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
                                         class="bi bi-plus"></i> </button>
                             </div>
                         </div>
@@ -314,23 +329,24 @@
 <script setup>
 import { ref } from 'vue'
 import img1 from '../assets/images/musicLogo.png'
-import img2 from '../assets/images/taylorswiftlover.jpg'
-import img3 from '../assets/images/harudorobou.jpg'
-import img4 from '../assets/images/lovesickgirls.jpg'
-import img5 from '../assets/images/tadakiminihare.jpg'
-import img6 from '../assets/images/whatislove.jpg'
-import img7 from '../assets/images/lovestory.png'
-import img8 from '../assets/images/bacbling.jpg'
-import img9 from '../assets/images/yorushika.jpg'
-import img10 from '../assets/images/taylorswift.jpg'
-import img11 from '../assets/images/blackpink.jpg'
-import img12 from '../assets/images/ado.jpg'
-import img13 from '../assets/images/tadakiminihare.jpg'
-import img14 from '../assets/images/lovestory.png'
-import img15 from '../assets/images/bacbling.jpg'
-import img16 from '../assets/images/yorushika.jpg'
-import img17 from '../assets/images/taylorswift.jpg'
-import img18 from '../assets/images/ado.jpg'
+import img2 from '../assets/images/tadakiminihare.jpg'
+import img3 from '../assets/images/lovestory.png'
+import img4 from '../assets/images/bacbling.jpg'
+import img5 from '../assets/images/yorushika.jpg'
+import img6 from '../assets/images/taylorswift.jpg'
+import img7 from '../assets/images/ado.jpg'
+import img8 from '../assets/images/haru.png'
+import img9 from '../assets/images/idol.jpg'
+import img10 from '../assets/images/ussewa.jpg'
+import img11 from '../assets/images/show.jpg'
+import img12 from '../assets/images/gurenge.jpg'
+import img13 from '../assets/images/yorunikakeru.jpg'
+import img14 from '../assets/images/lionheart.jpg'
+import img15 from '../assets/images/unstoppable.jpg'
+import img16 from '../assets/images/blankspace.jpg'
+import img17 from '../assets/images/legendsneverdie.jpg'
+import img18 from '../assets/images/hope.jpg'
+import img19 from '../assets/images/youdidntknow.jpg'
 const item = ref([
     { image: img1 },
     { image: img2 },
@@ -349,7 +365,8 @@ const item = ref([
     { image: img15 },
     { image: img16 },
     { image: img17 },
-    { image: img18 }
+    { image: img18 },
+    { image: img19 }
 ]) 
 </script>
 
@@ -390,68 +407,49 @@ h3 {
     margin-bottom: 30px;
 }
 
-.carousel-img-wrapper {
-    position: relative;
-    overflow: hidden;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(63, 61, 86, 0.25);
+.custom-search {
+    background-color: #3f3d56;
+    border-radius: 12px;
+    box-shadow: inset 0 0 0 1px #555;
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    height: 52px; /* Tăng chiều cao khung */
+  }
 
-    height: 400px;
-    /* Cố định chiều cao */
-}
+  .custom-search:hover {
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+  }
 
-.carousel-img {
-    border: 4px solid #ff38ca;
-    border-radius: 20px;
-    transition: transform 2s ease;
+  .custom-search-input {
+    background-color: #3f3d56;
+    color: white;
+    border: none;
+    border-radius: 0 12px 12px 0;
+    height: 100%; /* Chiều cao bằng nhóm input */
+    font-size: 1rem;
+  }
 
-    width: 100%;
+  .custom-search-input:focus {
+    outline: none;
+    box-shadow: none;
+    background-color: #484660;
+    color: white;
+  }
+
+  .input-group-text {
+    background-color: #3f3d56;
+    border: none;
+    border-radius: 12px 0 0 12px;
     height: 100%;
-    /* cho ảnh đầy container */
-    object-fit: cover;
-    /* giữ tỉ lệ, cắt nếu cần */
-}
+  }
 
-/* Hiệu ứng zoom khi ảnh active */
-.carousel-item.active .carousel-img {
-    transform: scale(1.05);
-}
+  .input-group-text i {
+    color: white;
+    font-size: 1.2rem;
+  }
 
-/* Caption mờ lên từ dưới */
-.caption {
-    position: absolute;
-    bottom: 20px;
-    left: 30px;
-    font-size: 2rem;
-    font-weight: 700;
-    font-family: 'Pacifico', cursive;
-    color: #ff38ca;
-    /* Màu hồng nổi bật */
-    background-color: rgba(0, 0, 0, 0.6);
-    /* Nền tối hơn */
-    padding: 8px 16px;
-    border-radius: 10px;
-    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.95);
-    /* Bóng chữ đậm hơn */
-    animation: fadeInUp 1.2s ease forwards;
-    opacity: 0;
-    -webkit-text-fill-color: unset;
-}
-
-.carousel-item.active .caption {
-    opacity: 1;
-}
-
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  .custom-search-input::placeholder {
+  color: white;
+  opacity: 1; /* Đảm bảo không bị mờ nhạt */
 }
 
 .nav-tabs .nav-link.active {
