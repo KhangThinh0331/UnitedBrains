@@ -2,9 +2,9 @@
     <div class="container-fluid">
         <nav class="navbar navbar-expand-sm">
             <div class="container-fluid">
-                <a class="navbar-brand" href="">
-                    <img :src="item[0].image" alt="" style="width: 150px;" />
-                </a>
+                <router-link class="navbar-brand" to="/">
+                    <img :src="item[0].image" alt="Logo" style="width: 150px;" />
+                </router-link>
                 <h1 style="color: white;" class="mx-auto">Spotifast</h1>
             </div>
         </nav>

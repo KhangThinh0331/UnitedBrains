@@ -2,9 +2,9 @@
     <div class="container-fluid">
         <nav class="navbar navbar-expand-sm">
             <div class="container-fluid">
-                <a class="navbar-brand" href="">
-                    <img :src="item[0].image" alt="" style="width: 150px;" />
-                </a>
+                <router-link class="navbar-brand" to="/">
+                    <img :src="item[0].image" alt="Logo" style="width: 150px;" />
+                </router-link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapsibleNavbar">
                     <span class="navbar-toggler-icon"></span>
@@ -12,13 +12,19 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fa-solid fa-film"></i>Bài hát</a>
+                            <router-link class="nav-link" to="/songs">
+                                <i class="fa-solid fa-film"></i> Bài hát
+                            </router-link>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fa-solid fa-circle-info"></i>Nghệ sĩ</a>
+                            <router-link class="nav-link" to="/artists">
+                                <i class="fa-solid fa-circle-info"></i> Nghệ sĩ
+                            </router-link>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href=""><i class="fa-solid fa-user"></i>Tài khoản</a>
+                            <router-link class="nav-link" to="/account">
+                                <i class="fa-solid fa-user"></i> Tài khoản
+                            </router-link>
                         </li>
                     </ul>
                 </div>
@@ -350,7 +356,7 @@ const item = ref([
     { image: img16 },
     { image: img17 },
     { image: img18 }
-]) 
+])
 </script>
 
 <style scoped>

@@ -1,9 +1,8 @@
 <script setup>
-import song from './components/Artist.vue'
 </script>
 
 <template>
-  <song></song>
+  <router-view />
 </template>
 
 <style scoped>
