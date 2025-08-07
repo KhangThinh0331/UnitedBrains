@@ -22,6 +22,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            color: white;
         }
 
         .admin-title {
@@ -65,9 +66,9 @@
         }
     </style>
 </head>
-<body class="bg-black text-white">
+<body class="bg-black container">
 
-<div class="container py-3">
+<div class="py-3">
     <div class="admin-navbar shadow">
         <div class="admin-title">Administration Tool</div>
         <div class="admin-links">

@@ -22,6 +22,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            color: white;
         }
 
         .admin-title {
@@ -65,9 +66,9 @@
         }
     </style>
 </head>
-<body class="bg-black text-white">
+<body class="bg-black container">
 
-<div class="container py-3">
+<div class="py-3">
     <div class="admin-navbar shadow">
         <div class="admin-title">Administration Tool</div>
         <div class="admin-links">
@@ -113,59 +114,62 @@
     <div class="tab-content" id="videoTabContent">
         <!-- Video Edition -->
         <div class="tab-pane fade show active" id="edition" role="tabpanel">
-            <div class="row mt-3">
-                <div class="col-md-4">
-                    <div class="poster-box">POSTER</div>
+            <form action="${pageContext.request.contextPath}/admin/videoManagement" method="post" enctype="multipart/form-data">
+
+
+                <div class="mb-2">
+                    <label class="form-label">Poster:</label>
+                    <input type="file" class="form-control" name="posterFile" id="posterInput">
+                    <div class="mt-2">
+                        <img id="posterPreview" src="${pageContext.request.contextPath}/images/${video.poster}" class="img-fluid" alt="poster" style="max-height: 200px;">
+                    </div>
                 </div>
 
-                <div class="col-md-8">
-                    <form>
-                        <div class="mb-2">
-                            <label class="form-label">TD:</label>
-                            <input type="text" class="form-control">
-                        </div>
-
-                        <div class="mb-2">
-                            <label class="form-label">Video Title:</label>
-                            <input type="text" class="form-control">
-                        </div>
-
-                        <div class="mb-2">
-                            <label class="form-label">View Count:</label>
-                            <input type="number" class="form-control" value="0">
-                        </div>
-
-                        <div class="mb-2">
-                            <label class="form-label">Link:</label>
-                            <input type="text" class="form-control" value="0">
-                        </div>
-
-                        <div class="mb-2">
-                            <label class="form-label d-block">Trạng thái:</label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="activeCheck" name="active">
-                                <label class="form-check-label" for="activeCheck">Active</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="inactiveCheck" name="active">
-                                <label class="form-check-label" for="inactiveCheck">Inactive</label>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Description:</label>
-                            <textarea class="form-control" rows="3"></textarea>
-                        </div>
-
-                        <div class="btn-group-bottom">
-                            <button type="button" class="btn btn-success">Create</button>
-                            <button type="button" class="btn btn-secondary">Update</button>
-                            <button type="button" class="btn btn-danger">Delete</button>
-                            <button type="reset" class="btn btn-warning">Reset</button>
-                        </div>
-                    </form>
+                <div class="mb-2">
+                    <label class="form-label">ID:</label>
+                    <input type="text" class="form-control" name="id" value="${video.id}">
                 </div>
-            </div>
+                <div class="mb-2">
+                    <label class="form-label">Video Title:</label>
+                    <input type="text" class="form-control" name="title" value="${video.title}">
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label">View Count:</label>
+                    <input type="number" class="form-control" name="views" value="${video.views}">
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label">Link:</label>
+                    <input type="text" class="form-control" name="link" value="${video.link}">
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label d-block">Trạng thái:</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="activeCheck" name="active" value="true" ${video.active ? "checked" : ""}>
+                        <label class="form-check-label" for="activeCheck">Active</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="inactiveCheck" name="active" value="false" ${!video.active ? "checked" : ""}>
+                        <label class="form-check-label" for="inactiveCheck">Inactive</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Description:</label>
+                    <textarea class="form-control" name="description" rows="3">${video.description}</textarea>
+                </div>
+
+                <div class="btn-group-bottom">
+                    <button type="submit" class="btn btn-success" name="action" value="create">Create</button>
+                    <button type="submit" class="btn btn-secondary" name="action" value="update">Update</button>
+                    <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
+                    <button type="submit" class="btn btn-warning" name="action" value="reset">Reset</button>
+                </div>
+            </form>
+            <i>${message}</i>
+
         </div>
 
         <!-- Video List (empty placeholder) -->
@@ -190,12 +194,12 @@
                             <tr>
                                 <td>${v.id}</td>
                                 <td>${v.title}</td>
-                                <td>${v.poster}</td>
+                                <td><a href="${pageContext.request.contextPath}/user/videoDetail?id=${v.id}"><img src="${pageContext.request.contextPath}/images/${v.poster} " width="120" height="90"/></a></td>
                                 <td>${v.views}</td>
                                 <td>${v.description}</td>
                                 <td><c:out value="${v.active ? 'Còn' : 'Hết'}" /></td>
                                 <td><a href="${v.link}" target="_blank">${v.link}</a></td>
-                                <td><a href="">Edit</a></td>
+                                <td> <a href="${pageContext.request.contextPath}/admin/videoManagement/edit?id=${v.id}" class="btn btn-sm btn-primary">Edit</a></td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -207,5 +211,20 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById("posterInput").addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById("posterPreview");
+
+            if (file && file.type.startsWith("image/")) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
 </body>
 </html>
