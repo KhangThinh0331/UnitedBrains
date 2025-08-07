@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet({"/admin/videoManagement","/admin/userManagement"})
+@WebServlet({"/admin/videoManagement","/admin/userManagement","/admin/report"})
 public class AdminServlet extends HttpServlet {
     VideoDAO vdao = new VideoDAOImpl();
     UsersDAO udao = new UsersDAOImpl();
@@ -31,6 +31,9 @@ public class AdminServlet extends HttpServlet {
             List<Users> users = udao.findAll();
             request.setAttribute("users", users);
             request.getRequestDispatcher("/WEB-INF/jsp/admin/userManagement.jsp").forward(request, response);
+        }
+        if (uri.contains("/admin/report")) {
+            request.getRequestDispatcher("/WEB-INF/jsp/admin/report.jsp").forward(request, response);
         }
     }
 }

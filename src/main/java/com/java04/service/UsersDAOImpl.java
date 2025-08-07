@@ -1,6 +1,7 @@
 package com.java04.service;
 
 import com.java04.entity.Users;
+import com.java04.utils.XJPA;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

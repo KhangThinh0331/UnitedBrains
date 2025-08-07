@@ -1,4 +1,5 @@
-package com.java04.service;
+
+package com.java04.utils;
 
 
 import javax.persistence.EntityManager;
@@ -14,4 +15,5 @@ public class XJPA {
         return factory.createEntityManager();
     }
 }
+
 

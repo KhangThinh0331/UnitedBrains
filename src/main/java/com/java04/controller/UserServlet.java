@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet({"/user/videoList"})
+@WebServlet({"/user/videoList","/user/videoDetail/*","/user/videoShare/*"})
 public class UserServlet extends HttpServlet {
     VideoDAO vdao = new VideoDAOImpl();
     @Override
@@ -22,6 +22,17 @@ public class UserServlet extends HttpServlet {
             List<Video> videos =  vdao.findAll();
             request.setAttribute("videos", videos);
             request.getRequestDispatcher("/WEB-INF/jsp/user/videoList.jsp").forward(request, response);
+        }
+        if (uri.contains("/user/videoDetail")) {
+            String id = request.getParameter("id");
+            Video video = vdao.findById(id);
+            List<Video> videos =  vdao.findAll();
+            request.setAttribute("videos", videos);
+            request.setAttribute("video", video);
+            request.getRequestDispatcher("/WEB-INF/jsp/user/videoDetail.jsp").forward(request, response);
+        }
+        if (uri.contains("/user/videoShare")) {
+            request.getRequestDispatcher("/WEB-INF/jsp/user/videoShare.jsp").forward(request, response);
         }
     }
 }

@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Ca Ngao
-  Date: 7/24/2025
-  Time: 12:49 PM
+  Date: 8/5/2025
+  Time: 4:08 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page pageEncoding="UTF-8" isELIgnored="false" %>
@@ -11,13 +11,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Danh sách video của User</title>
+    <title>Danh sách Video yêu thích</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="container">
-    <h2 style="text-align: center">Danh sách Video</h2>
+    <h2 style="text-align: center">Danh sách Video yêu thích</h2>
     <c:if test="${!empty videos}">
         <table class="table table-bordered table-hover table-striped text-center align-middle">
             <thead class="table-light">
@@ -35,11 +35,11 @@
                 <tr>
                     <td>${v.id}</td>
                     <td>${v.title}</td>
-                    <td><a href="${pageContext.request.contextPath}/user/videoDetail?id=${v.id}"><img src="${pageContext.request.contextPath}/images/${video.poster}"/></a> /></td>
+                    <td>${v.poster}</td>
                     <td>${v.views}</td>
                     <td><c:out value="${v.active ? 'Còn' : 'Hết'}" /></td>
                     <td>
-                        <button type="button" class="btn btn-success btn-sm">Like</button>
+                        <button type="button" class="btn btn-warning btn-sm">Unlike</button>
                         <button type="button" class="btn btn-info btn-sm">Share</button>
                     </td>
                 </tr>

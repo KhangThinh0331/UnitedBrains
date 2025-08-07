@@ -76,7 +76,6 @@
 
                 <!-- Buttons -->
                 <div class="btn-group-bottom">
-                    <button type="button" class="btn btn-success">Create</button>
                     <button type="button" class="btn btn-secondary">Update</button>
                     <button type="button" class="btn btn-danger">Delete</button>
                     <button type="reset" class="btn btn-warning">Reset</button>
