@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet({"/login","/changePassword"})
+@WebServlet({"/login","/changePassword","/register","/index"})
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -23,6 +23,12 @@ public class LoginServlet extends HttpServlet {
         }
         if (uri.contains("/changePassword")) {
             request.getRequestDispatcher("/WEB-INF/jsp/user/changePassword.jsp").forward(request, response);
+        }
+        if (uri.contains("/register")) {
+            request.getRequestDispatcher("/WEB-INF/jsp/login/accountRegister.jsp").forward(request, response);
+        }
+        if (uri.contains("/index")) {
+            request.getRequestDispatcher("/WEB-INF/jsp/home/index.jsp").forward(request, response);
         }
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

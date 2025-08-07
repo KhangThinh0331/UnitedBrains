@@ -57,5 +57,13 @@ public class FavoriteDAOImpl implements FavoriteDAO {
             em.getTransaction().rollback();
         }
     }
+
+    @Override
+    public List<Favorite> findByUserId(String userId) {
+        String jpql = "SELECT f FROM Favorite f WHERE f.user.id = :userId";
+        return em.createQuery(jpql, Favorite.class)
+                .setParameter("userId", userId)
+                .getResultList();
+    }
 }
 

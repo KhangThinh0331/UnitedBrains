@@ -14,8 +14,83 @@
     <title>Danh sách video của User</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <style>
+        .admin-navbar {
+            background: linear-gradient(to bottom, #333 0%, #000 100%);
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .admin-title {
+            font-weight: bold;
+            color: yellow;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .admin-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-links a {
+            color: #a5ff75;
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .admin-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Custom dropdown override */
+        .dropdown-menu {
+            background-color: #222;
+            border-radius: 8px;
+            border: 1px solid #555;
+        }
+
+        .dropdown-menu a {
+            color: #a5ff75;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-black text-white">
+
+<div class="container py-3">
+    <div class="admin-navbar shadow">
+        <div class="admin-title">User Tool</div>
+        <div class="admin-links">
+            <a href="${pageContext.request.contextPath}/user/videoList">Video List</a>
+            <a href="${pageContext.request.contextPath}/user/videoLike">Video Favorite</a>
+            <div class="dropdown">
+                <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                >
+                    My Account
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">Logoff</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/changePassword">Change Password</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container">
     <h2 style="text-align: center">Danh sách Video</h2>
     <c:if test="${!empty videos}">
@@ -35,12 +110,12 @@
                 <tr>
                     <td>${v.id}</td>
                     <td>${v.title}</td>
-                    <td><a href="${pageContext.request.contextPath}/user/videoDetail?id=${v.id}"><img src="${pageContext.request.contextPath}/images/${video.poster}"/></a> /></td>
+                    <td><a href="${pageContext.request.contextPath}/user/videoDetail?id=${v.id}"><img src="${pageContext.request.contextPath}/images/${v.poster} " width="120" height="90"/></a></td>
                     <td>${v.views}</td>
                     <td><c:out value="${v.active ? 'Còn' : 'Hết'}" /></td>
                     <td>
-                        <button type="button" class="btn btn-success btn-sm">Like</button>
-                        <button type="button" class="btn btn-info btn-sm">Share</button>
+                        <form method="post" action="${pageContext.request.contextPath}/user/videoLike"> <input type="hidden" name="videoId" value="${v.id}" /> <button type="submit" class="btn btn-success btn-sm">Like</button> </form>
+                        <a href="${pageContext.request.contextPath}/user/videoShare?id=${v.id}" class="btn btn-info text-white btn-sm">Share</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -51,5 +126,6 @@
         <div class="alert alert-warning text-center">Không có video nào được tìm thấy.</div>
     </c:if>
 </div>
+<i>${message}</i>
 </body>
 </html>

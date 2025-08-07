@@ -72,7 +72,7 @@
         <div class="admin-title">User Tool</div>
         <div class="admin-links">
             <a href="${pageContext.request.contextPath}/user/videoList">Video List</a>
-
+            <a href="${pageContext.request.contextPath}/user/videoLike">Video Favorite</a>
             <div class="dropdown">
                 <a
                         class="nav-link dropdown-toggle"

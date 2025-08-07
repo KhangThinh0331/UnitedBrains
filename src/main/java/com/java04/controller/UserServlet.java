@@ -1,8 +1,10 @@
 package com.java04.controller;
 
+import com.java04.entity.Favorite;
+import com.java04.entity.Share;
+import com.java04.entity.Users;
 import com.java04.entity.Video;
-import com.java04.service.VideoDAO;
-import com.java04.service.VideoDAOImpl;
+import com.java04.service.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,11 +12,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
-@WebServlet({"/user/videoList","/user/videoDetail/*","/user/videoShare/*"})
+@WebServlet({"/user/videoList","/user/videoDetail/*","/user/videoShare/*","/user/videoLike/*","/user/videoUnlike"})
 public class UserServlet extends HttpServlet {
     VideoDAO vdao = new VideoDAOImpl();
+    FavoriteDAO fdao = new FavoriteDAOImpl();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String uri = request.getRequestURI();
@@ -34,6 +39,87 @@ public class UserServlet extends HttpServlet {
         if (uri.contains("/user/videoShare")) {
             request.getRequestDispatcher("/WEB-INF/jsp/user/videoShare.jsp").forward(request, response);
         }
+        if (uri.contains("/user/videoLike")) {
+            Users user = (Users) request.getSession().getAttribute("user");
+            List<Favorite> favorites = fdao.findByUserId(user.getId());
+            request.setAttribute("favorites", favorites);
+            request.getRequestDispatcher("/WEB-INF/jsp/user/videoLike.jsp").forward(request, response);
+        }
+    }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String uri = request.getRequestURI();
+        if (uri.contains("/user/videoShare")) {
+            String emailsInput = request.getParameter("emails");
+            String videoId = request.getParameter("videoId");
+// Tách email bởi dấu phẩy hoặc chấm phẩy
+            String[] emails = emailsInput.split("[,;\\s]+");
+
+// Tạo link video cần gửi
+            Video video = vdao.findById(videoId);
+            String videoLink;
+            if (video != null && video.getLink() != null) {
+                videoLink = video.getLink();
+            } else {
+                videoLink = "#"; // Hoặc xử lý lỗi
+            }
+
+            for (String email : emails) {
+                if (!email.trim().isEmpty()) {
+                    sendEmail(email.trim(), videoLink); // Gửi email
+                }
+            }
+            Users user = (Users) request.getSession().getAttribute("user");
+            if (user != null && video != null) {
+                Share share = new Share();
+                share.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
+                share.setUser(user);
+                share.setVideo(video);
+                share.setEmails(emailsInput);
+                share.setShareDate(new Date());
+
+                ShareDAO shareDAO = new ShareDAOImpl();
+                shareDAO.create(share);
+            }
+            request.setAttribute("message", "Đã gửi link đến bạn bè!");
+            request.getRequestDispatcher("/WEB-INF/jsp/user/videoShare.jsp").forward(request, response);
+        }
+        if (uri.contains("/user/videoLike")) {
+            String videoId = request.getParameter("videoId");
+            Users user = (Users) request.getSession().getAttribute("user");
+            if (user != null && videoId != null) {
+                Video video = vdao.findById(videoId);
+
+                if (video != null) {
+
+                    Favorite f = new Favorite();
+                    f.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
+                    f.setUser(user);
+                    f.setVideo(video);
+                    f.setLikeDate(new Date());
+                    fdao.create(f);
+                }
+            }
+
+            response.sendRedirect(request.getContextPath() + "/user/videoLike");
+        }
+        if(uri.contains("/user/videoUnlike")){
+            String favoriteIdStr = request.getParameter("favoriteId");
+
+            try {
+                long favoriteId = Long.parseLong(favoriteIdStr);
+                fdao.deleteById(favoriteId); // gọi DAO để xóa
+            } catch (Exception e) {
+                e.printStackTrace(); // có thể log hoặc báo lỗi
+            }
+            response.sendRedirect(request.getContextPath() + "/user/videoLike");
+        }
+    }
+    private void sendEmail(String to, String videoLink) {
+// Cấu hình thông tin gửi email (giả lập hoặc JavaMail)
+// Đây là ví dụ đơn giản in ra console
+        System.out.println("Sending to: " + to);
+        System.out.println("Video link: " + videoLink);
     }
 }
 

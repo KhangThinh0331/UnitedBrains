@@ -14,5 +14,7 @@ public interface FavoriteDAO {
     void update(Favorite item);
 
     void deleteById(Long id);
+
+    List<Favorite> findByUserId(String userId);
 }
 
