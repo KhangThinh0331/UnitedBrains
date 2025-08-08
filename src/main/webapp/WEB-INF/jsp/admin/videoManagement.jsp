@@ -115,7 +115,7 @@
         <!-- Video Edition -->
         <div class="tab-pane fade show active" id="edition" role="tabpanel">
             <form action="${pageContext.request.contextPath}/admin/videoManagement" method="post" enctype="multipart/form-data">
-
+                <input type="hidden" name="action" value="update" id="formAction">
 
                 <div class="mb-2">
                     <label class="form-label">Poster:</label>

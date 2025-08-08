@@ -16,5 +16,9 @@ public interface FavoriteDAO {
     void deleteById(Long id);
 
     List<Favorite> findByUserId(String userId);
+
+    List<Object[]> getVideoFavoritesSummary();
+
+    List<Favorite> getUsersByVideoId(String videoId);
 }
 

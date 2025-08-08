@@ -15,6 +15,7 @@ import java.util.List;
 
 @WebServlet({"/login","/changePassword","/register","/index"})
 public class LoginServlet extends HttpServlet {
+    UsersDAO dao = new UsersDAOImpl();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String uri = request.getRequestURI();
@@ -37,7 +38,7 @@ public class LoginServlet extends HttpServlet {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
 
-            UsersDAO dao = new UsersDAOImpl();
+
             Users user = dao.findById(username);
 
             if (user == null) {
@@ -94,6 +95,26 @@ public class LoginServlet extends HttpServlet {
             udao.update(user);
             request.setAttribute("message", "Đổi mật khẩu thành công");
             request.getRequestDispatcher("/WEB-INF/jsp/user/changePassword.jsp").forward(request, response);
+        }
+        if(uri.contains("/register")){
+            request.setCharacterEncoding("UTF-8");
+
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            String fullname = request.getParameter("fullname");
+            String email = request.getParameter("email");
+
+            Users user = new Users();
+            user.setId(username);
+            user.setPassword(password); // Nên mã hóa mật khẩu trước khi lưu
+            user.setFullName(fullname);
+            user.setEmail(email);
+            user.setAdmin(false); // Mặc định admin = false
+
+            dao.create(user);
+
+            request.setAttribute("message", "Đăng ký thành công!");
+            request.getRequestDispatcher("/WEB-INF/jsp/login/accountRegister.jsp").forward(request, response);
         }
     }
 }

@@ -70,4 +70,16 @@ public class VideoDAOImpl implements VideoDAO {
             return null;
         }
     }
+
+    @Override
+    public List<Video> getVideosWithFavorites() {
+        String jpql = "SELECT DISTINCT f.video FROM Favorite f";
+        return em.createQuery(jpql, Video.class).getResultList();
+    }
+
+    @Override
+    public List<Video> getVideosWithShares() {
+        String jpql = "SELECT DISTINCT s.video FROM Share s";
+        return em.createQuery(jpql, Video.class).getResultList();
+    }
 }

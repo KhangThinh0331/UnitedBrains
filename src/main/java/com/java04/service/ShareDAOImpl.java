@@ -1,5 +1,6 @@
 package com.java04.service;
 
+import com.java04.entity.Favorite;
 import com.java04.entity.Share;
 import com.java04.utils.XJPA;
 
@@ -63,5 +64,13 @@ public class ShareDAOImpl implements ShareDAO {
         String jpql = "select s.video.title, count(s), min(s.shareDate), max(s.shareDate) from Share s group by s.video";
         TypedQuery<Object[]> query = em.createQuery(jpql,Object[].class);
         return query.getResultList();
+    }
+
+    @Override
+    public List<Share> getUsersByVideoId(String videoId) {
+        String jpql = "FROM Share s WHERE s.video.id = :vid";
+        return em.createQuery(jpql, Share.class)
+                .setParameter("vid", videoId)
+                .getResultList();
     }
 }

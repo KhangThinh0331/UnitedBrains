@@ -65,5 +65,24 @@ public class FavoriteDAOImpl implements FavoriteDAO {
                 .setParameter("userId", userId)
                 .getResultList();
     }
+
+    @Override
+    public List<Object[]> getVideoFavoritesSummary() {
+        String jpql = "SELECT f.video.title, " +
+                "COUNT(f), " +
+                "MAX(f.likeDate), " +
+                "MIN(f.likeDate) " +
+                "FROM Favorite f " +
+                "GROUP BY f.video.title";
+        return em.createQuery(jpql, Object[].class).getResultList();
+    }
+
+    @Override
+    public List<Favorite> getUsersByVideoId(String videoId) {
+        String jpql = "FROM Favorite f WHERE f.video.id = :vid";
+        return em.createQuery(jpql, Favorite.class)
+                .setParameter("vid", videoId)
+                .getResultList();
+    }
 }
 

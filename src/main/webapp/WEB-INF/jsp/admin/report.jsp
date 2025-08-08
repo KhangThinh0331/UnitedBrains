@@ -8,6 +8,7 @@
 <%@ page pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -94,102 +95,121 @@
   </div>
 </div>
 
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="favorites-tab" data-bs-toggle="tab" data-bs-target="#favorites" type="button" role="tab">Favorites</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="favorite-users-tab" data-bs-toggle="tab" data-bs-target="#favorite-users" type="button" role="tab">Favorite Users</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="shared-friends-tab" data-bs-toggle="tab" data-bs-target="#shared-friends" type="button" role="tab">Shared Friends</button>
-  </li>
-</ul>
+<div class="container">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="favorites-tab" data-bs-toggle="tab" data-bs-target="#favorites" type="button" role="tab">Favorites</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="favorite-users-tab" data-bs-toggle="tab" data-bs-target="#favorite-users" type="button" role="tab">Favorite Users</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="shared-friends-tab" data-bs-toggle="tab" data-bs-target="#shared-friends" type="button" role="tab">Shared Friends</button>
+    </li>
+  </ul>
 
-<div class="tab-content" id="myTabContent">
+  <div class="tab-content" id="myTabContent">
 
-  <!-- TAB 1: Favorites -->
-  <div class="tab-pane fade show active" id="favorites" role="tabpanel">
-    <table class="table table-bordered mt-3">
-      <thead class="table-light">
-      <tr>
-        <th>Video Title</th>
-        <th>Favorite Count</th>
-        <th>Latest Date</th>
-        <th>Oldest Date</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>Lâu ghê mới gặp</td>
-        <td>100</td>
-        <td>31/12/2020</td>
-        <td>01/01/2020</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- TAB 2: Favorite Users -->
-  <div class="tab-pane fade" id="favorite-users" role="tabpanel">
-    <div class="mt-3">
-      <label for="videoTitle" class="form-label">Video Title:</label>
-      <select class="form-select" id="videoTitle">
-        <option selected>Lâu ghê mới gặp</option>
-        <option>Video khác 1</option>
-        <option>Video khác 2</option>
-      </select>
+    <!-- TAB 1: Favorites -->
+    <div class="tab-pane fade show active" id="favorites" role="tabpanel">
+      <table class="table table-bordered mt-3">
+        <thead class="table-light">
+        <tr>
+          <th>Video Title</th>
+          <th>Favorite Count</th>
+          <th>Latest Date</th>
+          <th>Oldest Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="row" items="${favoritesSummary}">
+          <tr>
+            <td>${row[0]}</td>
+            <td>${row[1]}</td>
+            <td><fmt:formatDate value="${row[2]}" pattern="dd/MM/yyyy"/></td>
+            <td><fmt:formatDate value="${row[3]}" pattern="dd/MM/yyyy"/></td>
+          </tr>
+        </c:forEach>
+        </tbody>
+      </table>
     </div>
-    <table class="table table-bordered mt-3">
-      <thead class="table-light">
-      <tr>
-        <th>Username</th>
-        <th>Fullname</th>
-        <th>Email</th>
-        <th>Favorite Date</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>TeoNV</td>
-        <td>Nguyễn Văn Tèo</td>
-        <td>teonv@gmail.com</td>
-        <td>01/01/2020</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
 
-  <!-- TAB 3: Shared Friends -->
-  <div class="tab-pane fade" id="shared-friends" role="tabpanel">
-    <div class="mt-3">
-      <label for="videoTitle2" class="form-label">Video Title:</label>
-      <select class="form-select" id="videoTitle2">
-        <option selected>Lâu ghê mới gặp</option>
-        <option>Video khác 1</option>
-        <option>Video khác 2</option>
-      </select>
+    <!-- TAB 2: Favorite Users -->
+    <div class="tab-pane fade" id="favorite-users" role="tabpanel">
+      <div class="mt-3">
+        <form method="get" action="${pageContext.request.contextPath}/admin/report">
+          <label for="videoTitle" class="form-label">Video Title:</label>
+          <select class="form-select" id="videoTitle" name="videoId" onchange="this.form.submit()">
+            <option value="">-- Chọn video --</option>
+            <c:forEach var="v" items="${videos}">
+              <option value="${v.id}" ${selectedVideoId == v.id ? 'selected' : ''}>
+                  ${v.title}
+              </option>
+            </c:forEach>
+          </select>
+        </form>
+      </div>
+
+      <table class="table table-bordered mt-3">
+        <thead class="table-light">
+        <tr>
+          <th>Username</th>
+          <th>Fullname</th>
+          <th>Email</th>
+          <th>Favorite Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="f" items="${favorites}">
+          <tr>
+            <td>${f.user.id}</td>
+            <td>${f.user.fullName}</td>
+            <td>${f.user.email}</td>
+            <td><fmt:formatDate value="${f.likeDate}" pattern="dd/MM/yyyy"/></td>
+          </tr>
+        </c:forEach>
+        </tbody>
+      </table>
     </div>
-    <table class="table table-bordered mt-3">
-      <thead class="table-light">
-      <tr>
-        <th>Sender Name</th>
-        <th>Sender Email</th>
-        <th>Receiver Email</th>
-        <th>Sent Date</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>Nguyễn Văn Tèo</td>
-        <td>teonv@gmail.com</td>
-        <td>poly@gmail.com</td>
-        <td>01/01/2020</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
 
+    <!-- TAB 3: Shared Friends -->
+    <div class="tab-pane fade" id="shared-friends" role="tabpanel">
+      <<div class="mt-3">
+      <form method="get" action="${pageContext.request.contextPath}/admin/report">
+        <label for="videoTitle" class="form-label">Video Title:</label>
+        <select class="form-select" id="videoTitle" name="videoKey" onchange="this.form.submit()">
+          <option value="">-- Chọn video --</option>
+          <c:forEach var="vs" items="${videoss}">
+            <option value="${vs.id}" ${selectedVideoKey == vs.id ? 'selected' : ''}>
+                ${vs.title}
+            </option>
+          </c:forEach>
+        </select>
+      </form>
+    </div>
+      <table class="table table-bordered mt-3">
+        <thead class="table-light">
+        <tr>
+          <th>Sender Name</th>
+          <th>Sender Email</th>
+          <th>Receiver Email</th>
+          <th>Sent Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="s" items="${share}">
+          <tr>
+            <td>${s.user.fullName}</td>
+            <td>${s.user.email}</td>
+            <td>${s.emails}</td>
+            <td><fmt:formatDate value="${s.shareDate}" pattern="dd/MM/yyyy"/></td>
+          </tr>
+        </c:forEach>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
 </div>
 </body>
 </html>

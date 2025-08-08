@@ -16,4 +16,8 @@ public interface VideoDAO {
     void deleteById(String id);
 
     List<Video> findByKeyword(String keyword);
+
+    List<Video> getVideosWithFavorites();
+
+    List<Video> getVideosWithShares();
 }

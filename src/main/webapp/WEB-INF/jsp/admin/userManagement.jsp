@@ -116,26 +116,28 @@
 
         <!-- USER EDITION -->
         <div class="tab-pane fade show active" id="edition" role="tabpanel">
-            <form class="mt-3">
+            <form class="mt-3" action="${pageContext.request.contextPath}/admin/userManagement" method="post">
+                <input type="hidden" name="action" value="update" id="formAction">
+
                 <div class="row mb-2">
                     <div class="col-md-6">
                         <label class="form-label">ID:</label>
-                        <input type="text" class="form-control">
+                        <input type="text" name="id" class="form-control" value="${selectedUser.id}" ${selectedUser != null ? 'readonly' : ''}>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Password:</label>
-                        <input type="password" class="form-control">
+                        <input type="password" name="password" class="form-control" value="${selectedUser.password}">
                     </div>
                 </div>
 
                 <div class="row mb-2">
                     <div class="col-md-6">
                         <label class="form-label">Fullname:</label>
-                        <input type="text" class="form-control">
+                        <input type="text" name="fullName" class="form-control" value="${selectedUser.fullName}">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Email Address:</label>
-                        <input type="email" class="form-control">
+                        <input type="email" name="email" class="form-control" value="${selectedUser.email}">
                     </div>
                 </div>
 
@@ -143,23 +145,25 @@
                 <div class="mb-3">
                     <label class="form-label d-block">Role:</label>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="admin" id="roleUser" value="user" checked>
-                        <label class="form-check-label" for="roleUser">User</label>
+                        <input class="form-check-input" type="radio" name="admin" value="false" ${selectedUser == null || !selectedUser.admin ? 'checked' : ''}>
+                        <label class="form-check-label">User</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="admin" id="roleAdmin" value="admin">
-                        <label class="form-check-label" for="roleAdmin">Admin</label>
+                        <input class="form-check-input" type="radio" name="admin" value="true" ${selectedUser != null && selectedUser.admin ? 'checked' : ''}>
+                        <label class="form-check-label">Admin</label>
                     </div>
                 </div>
 
                 <!-- Buttons -->
                 <div class="btn-group-bottom">
-                    <button type="button" class="btn btn-secondary">Update</button>
-                    <button type="button" class="btn btn-danger">Delete</button>
-                    <button type="reset" class="btn btn-warning">Reset</button>
+                    <button type="submit" class="btn btn-secondary" onclick="document.getElementById('formAction').value='update'">Update</button>
+                    <button type="submit" class="btn btn-danger" onclick="document.getElementById('formAction').value='delete'">Delete</button>
+                    <button type="submit" class="btn btn-warning" onclick="document.getElementById('formAction').value='reset'">Reset</button>
                 </div>
             </form>
+            <i>${message}</i>
         </div>
+
 
         <!-- USER LIST (placeholder) -->
         <div class="tab-pane fade" id="list" role="tabpanel">
@@ -184,7 +188,7 @@
                                 <td>${u.fullName}</td>
                                 <td>${u.email}</td>
                                 <td><c:out value="${u.admin ? 'Admin' : 'User'}" /></td>
-                                <td><a href="">Edit</a></td>
+                                <td><a href="${pageContext.request.contextPath}/admin/userManagement?action=edit&id=${u.id}" class="btn btn-sm btn-primary">Edit</a></td>
                             </tr>
                         </c:forEach>
                         </tbody>

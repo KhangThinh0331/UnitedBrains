@@ -16,4 +16,6 @@ public interface ShareDAO {
     void deleteById(Long id);
 
     List<Object[]> getShareVideoInfo();
+
+    List<Share> getUsersByVideoId(String videoId);
 }

@@ -26,9 +26,6 @@ public class Video {
     @OneToMany(mappedBy = "video")
     private List<Share> shares;
 
-    public Video() {
-    }
-
     public List<Favorite> getFavorites() {
         return favorites;
     }
