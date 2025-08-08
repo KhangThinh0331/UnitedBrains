@@ -68,8 +68,7 @@ public class LoginServlet extends HttpServlet {
             String currentPassword = request.getParameter("currentPassword");
             String newPassword = request.getParameter("newPassword");
             String confirmPassword = request.getParameter("confirmPassword");
-            UsersDAO udao = new UsersDAOImpl();
-            Users u = udao.findById(userId);
+            Users u = dao.findById(userId);
             if (u == null) {
                 request.setAttribute("message", "Không tìm thấy người dùng với ID: " + userId);
                 request.getRequestDispatcher("/WEB-INF/jsp/user/changePassword.jsp").forward(request, response);
@@ -92,7 +91,7 @@ public class LoginServlet extends HttpServlet {
             // Cập nhật mật khẩu mới
             user.setPassword(newPassword);
               // Đảm bảo phương thức update có xử lý cập nhật mật khẩu
-            udao.update(user);
+            dao.update(user);
             request.setAttribute("message", "Đổi mật khẩu thành công");
             request.getRequestDispatcher("/WEB-INF/jsp/user/changePassword.jsp").forward(request, response);
         }

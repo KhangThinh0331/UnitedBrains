@@ -25,33 +25,36 @@
     </div>
 
     <!-- Form content -->
-    <div class="p-3">
-      <div class="row g-3">
-        <div class="col-md-6">
-          <label for="username" class="form-label fw-semibold text-capitalize">Username:</label>
-          <input type="text" class="form-control border-warning" id="username" name="userId"/>
-        </div>
-        <div class="col-md-6">
-          <label for="password" class="form-label fw-semibold text-capitalize">Current password:</label>
-          <input type="password" class="form-control border-warning" id="password" name="currentPassword"/>
-        </div>
-        <div class="col-md-6">
-          <label for="fullname" class="form-label fw-semibold text-capitalize">New password:</label>
-          <input type="text" class="form-control border-warning" id="fullname" name="newPassword"/>
-        </div>
-        <div class="col-md-6">
-          <label for="email" class="form-label fw-semibold text-capitalize">Confirm new password:</label>
-          <input type="email" class="form-control border-warning" id="email" name="confirmPassword"/>
+    <form method="post">
+      <div class="p-3">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="username" class="form-label fw-semibold text-capitalize">Username:</label>
+            <input type="text" class="form-control border-warning" id="username" name="userId"/>
+          </div>
+          <div class="col-md-6">
+            <label for="password" class="form-label fw-semibold text-capitalize">Current password:</label>
+            <input type="password" class="form-control border-warning" id="password" name="currentPassword"/>
+          </div>
+          <div class="col-md-6">
+            <label for="fullname" class="form-label fw-semibold text-capitalize">New password:</label>
+            <input type="password" class="form-control border-warning" id="fullname" name="newPassword"/>
+          </div>
+          <div class="col-md-6">
+            <label for="email" class="form-label fw-semibold text-capitalize">Confirm new password:</label>
+            <input type="password" class="form-control border-warning" id="email" name="confirmPassword"/>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Footer -->
-    <div class="bg-light d-flex justify-content-end px-3 py-2 border-top border-warning">
-      <button class="btn btn-warning text-white shadow-sm px-4" type="submit">Change</button>
-    </div>
+      <!-- Footer -->
+      <div class="bg-light d-flex justify-content-end px-3 py-2 border-top border-warning">
+        <button class="btn btn-warning text-white shadow-sm px-4" type="submit">Change</button>
+      </div>
+    </form>
 
   </div>
 </div>
+<i>${message}</i>
 </body>
 </html>

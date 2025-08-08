@@ -65,7 +65,7 @@
         }
     </style>
 </head>
-<body class="bg-black text-white">
+<body class="bg-black">
 
 <div class="container py-3">
     <div class="admin-navbar shadow">
@@ -97,7 +97,8 @@
             <div class="video-thumbnail">
                 <img src="${pageContext.request.contextPath}/images/${video.poster}" style="max-height: 300px;" />
             </div>
-            <div class="video-title">${video.title}</div>
+            <div class="video-title">${video.title} lượt xem</div>
+            <div class="video-views">${video.views}</div>
             <div class="video-description"> <p class="mb-1">${video.description}</p>
                 <div class="extra-links"> <a href="${video.link}" target="_blank">${video.link}</a></div>
             </div>

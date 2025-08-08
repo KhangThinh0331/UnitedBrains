@@ -12,7 +12,9 @@ import java.io.IOException;
 @WebFilter({
         "/admin/*",
         "/change-password",
-        "/user/*",
+        "/user/videoLike/*",
+        "/user/videoShare/*",
+        "/user/videoUnlike/*",
 })
 public class AuthFilter implements Filter {
     public static final String SECURITY_URI = "securityUri";
@@ -40,7 +42,7 @@ public class AuthFilter implements Filter {
         }
 
         // Nếu là admin nhưng cố truy cập video (chỉ dành cho user thường)
-        if (uri.contains("/user/") && user.getAdmin()) {
+        if (uri.contains("/user/videoLike/*")&&uri.contains("/user/videoShare/*")&&uri.contains("/user/videoUnlike/*") && user.getAdmin()) {
             resp.setContentType("text/html;charset=UTF-8");
             resp.getWriter().write("<h2 style='color: red; text-align: center; margin-top: 2rem;'>Admins are not allowed to access video features.</h2>");
             return;
