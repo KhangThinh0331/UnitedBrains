@@ -82,4 +82,20 @@ public class VideoDAOImpl implements VideoDAO {
         String jpql = "SELECT DISTINCT s.video FROM Share s";
         return em.createQuery(jpql, Video.class).getResultList();
     }
+
+    @Override
+    public void incrementViews(String videoId) {
+        try {
+            em.getTransaction().begin();
+            Video video = em.find(Video.class, videoId);
+            if (video != null) {
+                video.setViews(video.getViews() + 1);
+                em.merge(video);
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        }
+    }
 }

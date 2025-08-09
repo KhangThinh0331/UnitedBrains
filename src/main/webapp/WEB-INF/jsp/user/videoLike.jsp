@@ -85,7 +85,7 @@
                     My Account
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Logoff</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Logoff</a></li>
                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/changePassword">Change Password</a></li>
                 </ul>
             </div>
@@ -111,7 +111,8 @@
                 <tr>
                     <td>${f.video.id}</td>
                     <td>${f.video.title}</td>
-                    <td><a href="${pageContext.request.contextPath}/user/videoDetail?id=${f.video.id}"><img src="${pageContext.request.contextPath}/images/${f.video.poster} " width="120" height="90"/></a></td>
+                    <td><a href="${pageContext.request.contextPath}/user/videoDetail?id=${f.video.id}"><c:set var="videoId" value="${fn:substringAfter(f.video.link, '/embed/')}" />
+                        <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="${f.video.title}" style="max-height: 300px;" /></a></td>
                     <td>${f.video.views}</td>
                     <td><fmt:formatDate value="${f.likeDate}" pattern="dd/MM/yyyy"/></td>
                     <td>

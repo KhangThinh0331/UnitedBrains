@@ -71,6 +71,7 @@
     <div class="admin-navbar shadow">
         <div class="admin-title">Online Entertainment</div>
         <div class="admin-links">
+            <a href="${pageContext.request.contextPath}/">Video List</a>
             <a href="${pageContext.request.contextPath}/register">Đăng ký</a>
             <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
         </div>
@@ -78,7 +79,7 @@
 </div>
 <div class="container">
     <h2 style="text-align: center">Danh sách Video</h2>
-    <c:if test="${!empty vi}">
+    <c:if test="${!empty videos}">
         <table class="table table-bordered table-hover table-striped text-center align-middle">
             <thead class="table-light">
             <tr>
@@ -91,11 +92,12 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="v" items="${vi}">
+            <c:forEach var="v" items="${videos}">
                 <tr>
                     <td>${v.id}</td>
                     <td>${v.title}</td>
-                    <td><a href="${pageContext.request.contextPath}/user/videoDetail?id=${v.id}"><img src="${pageContext.request.contextPath}/images/${v.poster} " width="120" height="90"/></a></td>
+                    <td><a href="${pageContext.request.contextPath}/user/videoDt?id=${v.id}"><c:set var="videoId" value="${fn:substringAfter(v.link, '/embed/')}" />
+                        <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="${video.title}" style="max-height: 300px;" /></a></td>
                     <td>${v.views}</td>
                     <td><c:out value="${v.active ? 'Còn' : 'Hết'}" /></td>
                     <td>
@@ -107,7 +109,7 @@
             </tbody>
         </table>
     </c:if>
-    <c:if test="${empty vi}">
+    <c:if test="${empty videos}">
         <div class="alert alert-warning text-center">Không có video nào được tìm thấy.</div>
     </c:if>
 </div>

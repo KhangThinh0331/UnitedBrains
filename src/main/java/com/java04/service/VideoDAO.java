@@ -20,4 +20,6 @@ public interface VideoDAO {
     List<Video> getVideosWithFavorites();
 
     List<Video> getVideosWithShares();
+
+    void incrementViews(String videoId);
 }

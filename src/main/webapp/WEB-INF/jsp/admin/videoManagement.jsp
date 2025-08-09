@@ -87,7 +87,7 @@
                     My Account
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Logoff</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Logoff</a></li>
                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/changePassword">Change Password</a></li>
                 </ul>
             </div>
@@ -114,14 +114,17 @@
     <div class="tab-content" id="videoTabContent">
         <!-- Video Edition -->
         <div class="tab-pane fade show active" id="edition" role="tabpanel">
-            <form action="${pageContext.request.contextPath}/admin/videoManagement" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="action" value="update" id="formAction">
+            <form action="${pageContext.request.contextPath}/admin/videoManagement" method="post">
 
                 <div class="mb-2">
                     <label class="form-label">Poster:</label>
-                    <input type="file" class="form-control" name="posterFile" id="posterInput">
+                    <input type="hidden" name="poster" id="posterInput">
                     <div class="mt-2">
-                        <img id="posterPreview" src="${pageContext.request.contextPath}/images/${video.poster}" class="img-fluid" alt="poster" style="max-height: 200px;">
+                        <img id="posterPreview"
+                             src="${video.poster != null ? video.poster : ''}"
+                             class="img-fluid"
+                             alt="poster"
+                             style="max-height: 200px;">
                     </div>
                 </div>
 
@@ -136,12 +139,13 @@
 
                 <div class="mb-2">
                     <label class="form-label">View Count:</label>
-                    <input type="number" class="form-control" name="views" value="${video.views}">
+                    <input type="number" class="form-control" name="views" value="${video.views}" readonly>
                 </div>
 
                 <div class="mb-2">
-                    <label class="form-label">Link:</label>
-                    <input type="text" class="form-control" name="link" value="${video.link}">
+                    <label class="form-label">Link (YouTube):</label>
+                    <input type="text" class="form-control" id="videoLink" value="${video.link}">
+                    <input type="hidden" id="embedLink" name="link">
                 </div>
 
                 <div class="mb-2">
@@ -194,7 +198,8 @@
                             <tr>
                                 <td>${v.id}</td>
                                 <td>${v.title}</td>
-                                <td><a href="${pageContext.request.contextPath}/user/videoDetail?id=${v.id}"><img src="${pageContext.request.contextPath}/images/${v.poster} " width="120" height="90"/></a></td>
+                                <td><a href="${pageContext.request.contextPath}/user/videoDetail?id=${v.id}"><c:set var="videoId" value="${fn:substringAfter(v.link, '/embed/')}" />
+                                    <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="${video.title}" style="max-height: 300px;" /></a></td>
                                 <td>${v.views}</td>
                                 <td>${v.description}</td>
                                 <td><c:out value="${v.active ? 'Còn' : 'Hết'}" /></td>
@@ -211,20 +216,30 @@
             </div>
         </div>
     </div>
-    <script>
-        document.getElementById("posterInput").addEventListener("change", function (event) {
-            const file = event.target.files[0];
-            const preview = document.getElementById("posterPreview");
+<script>
+    function extractYouTubeId(url) {
+        let regExp = /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([^?&"'>]+)/;
+        let match = url.match(regExp);
+        return match ? match[1] : null;
+    }
 
-            if (file && file.type.startsWith("image/")) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    preview.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
+    document.getElementById("videoLink").addEventListener("input", function() {
+        let youtubeId = extractYouTubeId(this.value);
+        if (youtubeId) {
+            let embedUrl = "https://www.youtube.com/embed/" + youtubeId;
+            let posterUrl = "https://img.youtube.com/vi/" + youtubeId + "/hqdefault.jpg";
+
+            // set link embed để lưu vào DB
+            document.getElementById("embedLink").value = embedUrl;
+
+            // set poster để lưu vào DB
+            document.getElementById("posterInput").value = posterUrl;
+
+            // hiển thị ảnh poster
+            document.getElementById("posterPreview").src = posterUrl;
+        }
+    });
+</script>
 
 </body>
 </html>

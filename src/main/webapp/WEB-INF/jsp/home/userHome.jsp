@@ -84,12 +84,49 @@
                     My Account
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Logoff</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Logoff</a></li>
                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/changePassword">Change Password</a></li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
+<div class="container">
+    <h2 style="text-align: center">Danh sách Video</h2>
+    <c:if test="${!empty videos}">
+        <table class="table table-bordered table-hover table-striped text-center align-middle">
+            <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Poster</th>
+                <th>Views</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="v" items="${videos}">
+                <tr>
+                    <td>${v.id}</td>
+                    <td>${v.title}</td>
+                    <td><a href="${pageContext.request.contextPath}/user/videoDetail?id=${v.id}"><c:set var="videoId" value="${fn:substringAfter(v.link, '/embed/')}" />
+                        <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="${video.title}" style="max-height: 300px;" /></a></td>
+                    <td>${v.views}</td>
+                    <td><c:out value="${v.active ? 'Còn' : 'Hết'}" /></td>
+                    <td>
+                        <form method="post" action="${pageContext.request.contextPath}/user/videoLike"> <input type="hidden" name="videoId" value="${v.id}" /> <button type="submit" class="btn btn-success btn-sm">Like</button> </form>
+                        <a href="${pageContext.request.contextPath}/user/videoShare?id=${v.id}" class="btn btn-info text-white btn-sm">Share</a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </c:if>
+    <c:if test="${empty videos}">
+        <div class="alert alert-warning text-center">Không có video nào được tìm thấy.</div>
+    </c:if>
+</div>
+<i>${message}</i>
 </body>
 </html>

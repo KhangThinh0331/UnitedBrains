@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
 
-@MultipartConfig
 @WebServlet({
         "/admin/videoManagement",
         "/admin/userManagement",
@@ -130,40 +129,17 @@ public class AdminServlet extends HttpServlet {
         String action = request.getParameter("action");
         String id = request.getParameter("id");
         String title = request.getParameter("title");
+        String poster = request.getParameter("poster");
         String link = request.getParameter("link");
         String description = request.getParameter("description");
-        String viewsStr = request.getParameter("views");
-        int views = (viewsStr != null && !viewsStr.isEmpty()) ? Integer.parseInt(viewsStr) : 0;
         Boolean active = Boolean.valueOf(request.getParameter("active"));
 
-        // Xử lý file hình ảnh
-        String poster = null;
-
-        Part filePart = request.getPart("posterFile");
-        if (filePart != null && filePart.getSize() > 0) {
-            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-            String realPath = request.getServletContext().getRealPath("/images");
-            File uploadDir = new File(realPath);
-            if (!uploadDir.exists()) uploadDir.mkdirs();
-            filePart.write(realPath + File.separator + fileName);
-            poster = fileName;
-        }
-
-// Nếu không upload mới, giữ lại poster cũ nếu có
-        if ((poster == null || poster.isEmpty()) && id != null && !id.isEmpty()) {
-            Video existing = vdao.findById(id);
-            if (existing != null && existing.getPoster() != null) {
-                poster = existing.getPoster();
-            }
-        }
-
-        // Khởi tạo video
         Video video = new Video();
         video.setId(id);
         video.setTitle(title);
         video.setLink(link);
         video.setDescription(description);
-        video.setViews(views);
+
         video.setActive(active);
         video.setPoster(poster);
 
@@ -173,14 +149,42 @@ public class AdminServlet extends HttpServlet {
                     if (id == null || id.trim().isEmpty()) {
                         request.setAttribute("message", "ID cannot be empty when creating a new video.");
                     } else {
+                        video.setViews(0);
                         vdao.create(video);
                         request.setAttribute("message", "Video created successfully!");
                     }
                     break;
 
                 case "update":
-                    vdao.update(video);
-                    request.setAttribute("message", "Video updated successfully!");
+                    String videoId = request.getParameter("id");
+                    Video videos = vdao.findById(videoId);
+
+                    if (videos != null) {
+                        String newTitle = request.getParameter("title");
+                        String newDescription = request.getParameter("description");
+                        String newPoster = request.getParameter("poster");
+                        String newLink = request.getParameter("link");
+                        boolean newActive = Boolean.parseBoolean(request.getParameter("active"));
+
+                        boolean linkChanged = !videos.getLink().equals(newLink);
+
+                        videos.setTitle(newTitle);
+                        videos.setDescription(newDescription);
+                        videos.setPoster(newPoster);
+                        videos.setLink(newLink);
+                        videos.setActive(newActive);
+
+                        if (linkChanged) {
+                            // Reset lượt xem nếu link video thay đổi
+                            videos.setViews(0);
+                        }
+                        // Nếu link không đổi thì giữ nguyên lượt xem
+
+                        vdao.update(videos);
+                        request.setAttribute("message", "Video updated successfully!");
+                    } else {
+                        request.setAttribute("message", "Video not found!");
+                    }
                     break;
 
                 case "delete":

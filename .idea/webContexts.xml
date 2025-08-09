@@ -5,6 +5,8 @@
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/videoManagement.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/login/login.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/login" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/user/videoDetail.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/user" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/user/videoDetailHome.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/user" />
       </map>
     </option>
   </component>

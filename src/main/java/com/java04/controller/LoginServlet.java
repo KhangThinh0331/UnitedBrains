@@ -1,6 +1,6 @@
 package com.java04.controller;
 
-import com.java04.entity.Users;
+/*import com.java04.entity.Users;
 import com.java04.service.UsersDAO;
 import com.java04.service.UsersDAOImpl;
 
@@ -115,5 +115,140 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("message", "Đăng ký thành công!");
             request.getRequestDispatcher("/WEB-INF/jsp/login/accountRegister.jsp").forward(request, response);
         }
+    }
+}*/
+import com.java04.entity.Users;
+import com.java04.entity.Video;
+import com.java04.service.UsersDAO;
+import com.java04.service.UsersDAOImpl;
+import com.java04.service.VideoDAO;
+import com.java04.service.VideoDAOImpl;
+import com.java04.utils.MailSender;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.List;
+
+@WebServlet({"/login", "/changePassword", "/logout", "/register"})
+public class LoginServlet extends HttpServlet {
+    // Khai báo nhưng không khởi tạo ngay để tránh lỗi khởi tạo servlet
+    private UsersDAO  usersDAO;
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        // Khởi tạo usersDAO khi cần thiết
+        try {
+            usersDAO = new UsersDAOImpl();
+        } catch (Exception e) {
+            // Xử lý lỗi khởi tạo DAO (thường do lỗi kết nối cơ sở dữ liệu)
+            req.setAttribute("error", "Database connection error: " + e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/jsp/login/login.jsp").forward(req, resp);
+            return;
+        }
+
+        String uri = req.getRequestURI();
+        if (uri.contains("logout")){
+            req.getSession().invalidate();
+            resp.sendRedirect(req.getContextPath()+"/");
+            return;
+        }
+
+        if (uri.contains("login")) {
+            req.getRequestDispatcher("/WEB-INF/jsp/login/login.jsp").forward(req, resp);
+        } else if (uri.contains("register")) {
+            req.getRequestDispatcher("/WEB-INF/jsp/login/accountRegister.jsp").forward(req, resp);
+        } else if (uri.contains("changePassword")) {
+            req.getRequestDispatcher("/WEB-INF/jsp/user/changePassword.jsp").forward(req, resp);
+            // Chuyển hướng về trang đăng nhập thay vì trang chủ
+            resp.sendRedirect(req.getContextPath() + "/login");
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        // Khởi tạo usersDAO khi cần thiết
+        try {
+            usersDAO = new UsersDAOImpl();
+        } catch (Exception e) {
+            // Xử lý lỗi khởi tạo DAO (thường do lỗi kết nối cơ sở dữ liệu)
+            req.setAttribute("error", "Database connection error: " + e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/jsp/login/login.jsp").forward(req, resp);
+            return;
+        };
+
+        String uri = req.getRequestURI();
+
+        if (uri.contains("register")) {
+            try {
+                req.setCharacterEncoding("UTF-8");
+
+                String username = req.getParameter("username");
+                String password = req.getParameter("password");
+                String fullname = req.getParameter("fullname");
+                String email = req.getParameter("email");
+
+                Users user = new Users();
+                user.setId(username);
+                user.setPassword(password); // Nên mã hóa mật khẩu trước khi lưu
+                user.setFullName(fullname);
+                user.setEmail(email);
+                user.setAdmin(false); // Mặc định admin = false
+
+                usersDAO.create(user);
+                MailSender.send(user.getEmail(), "Chào mừng đến với OE Video!",
+                        "Xin chào " + user.getFullName() + ",\n\nTài khoản của bạn đã được đăng ký thành công.");
+                req.setAttribute("message", "Register Success, Please login.");
+                req.getRequestDispatcher("/WEB-INF/jsp/login/accountRegister.jsp").forward(req, resp);
+            } catch (Exception e){
+                req.setAttribute("error", "Registration Failed: " + e.getMessage());
+                req.getRequestDispatcher("/WEB-INF/jsp/login/accountRegister.jsp").forward(req, resp);
+            }
+        }
+
+        if (uri.contains("login")){
+            try {
+                // Lấy thông tin từ form đăng nhập
+                String username = req.getParameter("username");
+                String password = req.getParameter("password");
+
+                Users user = usersDAO.findByIdOrEmail(username);
+
+                if (user == null) {
+                    req.setAttribute("message", "Invalid username");
+                    req.getRequestDispatcher("/WEB-INF/jsp/login/login.jsp").forward(req, resp);
+                } else if (!user.getPassword().equals(password)) {
+                    req.setAttribute("message", "Invalid password");
+                    req.getRequestDispatcher("/WEB-INF/jsp/login/login.jsp").forward(req, resp);
+                } else {
+                    HttpSession session = req.getSession();
+                    session.setAttribute("user", user);
+                    req.setAttribute("message", "Login successfully");
+                    Boolean role = user.getAdmin(); // giả sử là "admin" hoặc "user"
+
+                    String targetPage;
+                    if (Boolean.TRUE.equals(role)) {
+                        targetPage = "/WEB-INF/jsp/home/home.jsp";
+                    } else {
+                        VideoDAO vdao = new VideoDAOImpl();
+                        List<Video> videos =  vdao.findAll();
+                        req.setAttribute("videos", videos);
+                        targetPage = "/WEB-INF/jsp/home/userHome.jsp";
+                    }
+
+                    req.getRequestDispatcher(targetPage).forward(req, resp);
+
+
+                }
+            } catch (Exception e) {
+                req.setAttribute("error", "Login Failed: " + e.getMessage());
+                req.getRequestDispatcher("/WEB-INF/jsp/login/login.jsp").forward(req, resp);
+            }
+        }
+
     }
 }
