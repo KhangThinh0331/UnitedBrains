@@ -249,6 +249,39 @@ public class LoginServlet extends HttpServlet {
                 req.getRequestDispatcher("/WEB-INF/jsp/login/login.jsp").forward(req, resp);
             }
         }
+        if(uri.contains("/changePassword")){
+            HttpSession session = req.getSession();
+            Users user = (Users) session.getAttribute("user");
+            String userId = req.getParameter("userId");
+            String currentPassword = req.getParameter("currentPassword");
+            String newPassword = req.getParameter("newPassword");
+            String confirmPassword = req.getParameter("confirmPassword");
+            Users u = usersDAO.findById(userId);
+            if (u == null) {
+                req.setAttribute("message", "Không tìm thấy người dùng với ID: " + userId);
+                req.getRequestDispatcher("/WEB-INF/jsp/user/changePassword.jsp").forward(req, resp);
+                return;
+            }
+            // Kiểm tra mật khẩu hiện tại
+            if (!user.getPassword().equals(currentPassword)) {
+                req.setAttribute("message", "Mật khẩu hiện tại không đúng");
+                req.getRequestDispatcher("/WEB-INF/jsp/user/changePassword.jsp").forward(req, resp);
+                return;
+            }
 
+            // Kiểm tra xác nhận mật khẩu
+            if (!newPassword.equals(confirmPassword)) {
+                req.setAttribute("message", "Xác nhận mật khẩu không khớp");
+                req.getRequestDispatcher("/WEB-INF/jsp/user/changePassword.jsp").forward(req, resp);
+                return;
+            }
+
+            // Cập nhật mật khẩu mới
+            user.setPassword(newPassword);
+            // Đảm bảo phương thức update có xử lý cập nhật mật khẩu
+            usersDAO.update(user);
+            req.setAttribute("message", "Đổi mật khẩu thành công");
+            req.getRequestDispatcher("/WEB-INF/jsp/user/changePassword.jsp").forward(req, resp);
+        }
     }
 }

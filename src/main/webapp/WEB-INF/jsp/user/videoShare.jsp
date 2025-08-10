@@ -65,7 +65,7 @@
         }
     </style>
 </head>
-<body class="bg-black text-white">
+<body class="bg-black">
 
 <div class="container py-3">
     <div class="admin-navbar shadow">

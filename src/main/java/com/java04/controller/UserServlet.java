@@ -5,6 +5,7 @@ import com.java04.entity.Share;
 import com.java04.entity.Users;
 import com.java04.entity.Video;
 import com.java04.service.*;
+import com.java04.utils.MailSender;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -95,12 +96,14 @@ public class UserServlet extends HttpServlet {
                 videoLink = "#"; // Hoặc xử lý lỗi
             }
 
+            Users user = new Users();
             for (String email : emails) {
-                if (!email.trim().isEmpty()) {
-                    sendEmail(email.trim(), videoLink); // Gửi email
+                if (!email.trim().isEmpty()) {// Gửi email
+                    MailSender.send(email, user.getFullName()+ "đã chia sẽ 1 video với bạn" ,
+                            video.getTitle() + "\n" + videoLink);
                 }
             }
-            Users user = (Users) request.getSession().getAttribute("user");
+            user = (Users) request.getSession().getAttribute("user");
             if (user != null && video != null) {
                 Share share = new Share();
                 share.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
@@ -112,7 +115,7 @@ public class UserServlet extends HttpServlet {
                 ShareDAO shareDAO = new ShareDAOImpl();
                 shareDAO.create(share);
             }
-            request.setAttribute("message", "Đã gửi link đến bạn bè!");
+            request.setAttribute("message", "Video đã được chia sẻ thành công!");
             request.getRequestDispatcher("/WEB-INF/jsp/user/videoShare.jsp").forward(request, response);
         }
         if (uri.contains("/user/videoLike")) {
@@ -145,12 +148,6 @@ public class UserServlet extends HttpServlet {
             }
             response.sendRedirect(request.getContextPath() + "/user/videoLike");
         }
-    }
-    private void sendEmail(String to, String videoLink) {
-// Cấu hình thông tin gửi email (giả lập hoặc JavaMail)
-// Đây là ví dụ đơn giản in ra console
-        System.out.println("Sending to: " + to);
-        System.out.println("Video link: " + videoLink);
     }
 }
 
