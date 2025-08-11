@@ -203,7 +203,7 @@ public class LoginServlet extends HttpServlet {
                 MailSender.send(user.getEmail(), "Chào mừng đến với OE Video!",
                         "Xin chào " + user.getFullName() + ",\n\nTài khoản của bạn đã được đăng ký thành công.");
                 req.setAttribute("message", "Register Success, Please login.");
-                req.getRequestDispatcher("/WEB-INF/jsp/login/accountRegister.jsp").forward(req, resp);
+                resp.sendRedirect(req.getContextPath() + "/login");
             } catch (Exception e){
                 req.setAttribute("error", "Registration Failed: " + e.getMessage());
                 req.getRequestDispatcher("/WEB-INF/jsp/login/accountRegister.jsp").forward(req, resp);

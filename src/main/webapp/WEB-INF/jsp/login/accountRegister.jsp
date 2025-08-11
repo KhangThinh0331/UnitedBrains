@@ -15,103 +15,257 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <style>
-        .admin-navbar {
-            background: linear-gradient(to bottom, #333 0%, #000 100%);
-            border-radius: 10px;
-            padding: 0.5rem 1rem;
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
             display: flex;
+            justify-content: center;
             align-items: center;
-            justify-content: space-between;
+            background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0') no-repeat center/cover;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: rgba(0,0,0,0.3);
+        }
+
+        .login_box {
+            position: relative;
+            width: 450px;
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 15px;
+            padding: 3rem 2rem 2rem;
             color: white;
+            background-color: rgba(0,0,0,0.4);
+            box-shadow: 0 0 30px rgba(0,0,0,0.3);
+            animation: fadeInUp 0.6s ease-out;
+            text-align: center;
         }
 
-        .admin-title {
-            font-weight: bold;
-            color: yellow;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .admin-links {
+        .login_header {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
             display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 1rem;
+            background-color: #c6c3c3;
+            width: 160px;
+            height: 70px;
+            border-radius: 0 0 20px 20px;
         }
 
-        .admin-links a {
-            color: #a5ff75;
+        .login_header span {
+            font-size: 26px;
+            font-weight: bold;
+            color: black;
+        }
+
+        .form-control {
+            background-color: transparent !important;
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 8px;
+            color: white !important;
+            padding-left: 40px;
+        }
+
+        .form-control:focus,
+        .form-control:not(:placeholder-shown) {
+            background-color: transparent !important;
+            color: white !important;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .input-group-text {
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.7);
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .btn-login {
+            background: white;
+            color: black;
+            font-weight: bold;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .btn-login:hover {
+            background: gold;
+            color: black;
+        }
+
+        .options {
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            margin-top: -5px;
+            margin-bottom: 15px;
+        }
+
+        .options a {
+            color: #fff;
             text-decoration: none;
-            font-weight: 500;
-            text-transform: uppercase;
         }
 
-        .admin-links a:hover {
+        .options a:hover {
             text-decoration: underline;
         }
 
-        /* Custom dropdown override */
-        .dropdown-menu {
-            background-color: #222;
-            border-radius: 8px;
-            border: 1px solid #555;
+        @keyframes fadeInUp {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
         }
 
-        .dropdown-menu a {
-            color: #a5ff75;
+        @keyframes fallOut {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            30% { transform: translateY(50px) rotate(3deg); opacity: 0.9; }
+            100% { transform: translateY(200px) rotate(10deg); opacity: 0; }
         }
 
-        .dropdown-menu a:hover {
-            background-color: #333;
-            color: #fff;
+        .fall-out {
+            animation: fallOut 0.8s ease-in forwards;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .back-btn:hover {
+            color: gold;
+        }
+
+        /* Toast thông báo */
+        .toast-success {
+            position: fixed;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #28a745;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            opacity: 0;
+            z-index: 9999;
+            transition: all 0.5s ease;
+        }
+        .toast-success.show {
+            top: 30px;
+            opacity: 1;
         }
     </style>
+
 </head>
-<body class="bg-black">
-
-<div class="container py-3">
-    <div class="admin-navbar shadow">
-        <div class="admin-title">Online Entertainment</div>
-        <div class="admin-links">
-            <a href="${pageContext.request.contextPath}/register">Đăng ký</a>
-            <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
+<body>
+<div class="wrapper">
+    <div class="login_box" id="registerBox">
+        <i class="bi bi-arrow-left-circle back-btn" id="backBtn"></i>
+        <div class="login_header">
+            <span>Register</span>
         </div>
+        <c:url var="url" value="/register"></c:url>
+        <form id="registerForm" action="${url}" method="post" class="mt-4">
+            <div class="mb-3 position-relative">
+                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                <input type="text" name="username" class="form-control" placeholder="Username" required>
+            </div>
+            <div class="mb-3 position-relative">
+                <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                <input type="text" name="fullname" class="form-control" placeholder="Full name" required>
+            </div>
+            <div class="mb-3 position-relative">
+                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                <input type="email" name="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="mb-3 position-relative">
+                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+
+            <button type="submit" class="btn btn-login w-100">Register</button>
+
+            <p class="text-center mt-3 mb-0">Already have an account?
+                <a id="loginLink" href="${pageContext.request.contextPath}/login">Login</a>
+            </p>
+        </form>
     </div>
 </div>
 
-<div class="container mt-5">
-    <div class="card shadow-sm" style="max-width: 500px; margin: auto;">
-        <div class="card-header bg-success text-white fw-bold">
-            REGISTRATION
-        </div>
-        <div class="card-body">
-            <form action="register" method="post">
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="username" class="form-label">Username:</label>
-                        <input type="text" name="username" id="username" class="form-control" required>
-                    </div>
-                    <div class="col">
-                        <label for="password" class="form-label">Password:</label>
-                        <input type="password" name="password" id="password" class="form-control" required>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="fullname" class="form-label">Fullname:</label>
-                        <input type="text" name="fullname" id="fullname" class="form-control" required>
-                    </div>
-                    <div class="col">
-                        <label for="email" class="form-label">Email Address:</label>
-                        <input type="email" name="email" id="email" class="form-control" required>
-                    </div>
-                </div>
-                <div class="text-end">
-                    <button type="submit" class="btn btn-warning text-white fw-bold px-4">Sign Up</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<i>${message}</i>
+<!-- Toast -->
+<div id="successToast" class="toast-success">Đăng ký thành công!</div>
+
+<script>
+    function addExitEffectAndRedirect(element, redirectUrl) {
+        element.classList.add("fall-out");
+        setTimeout(() => {
+            window.location.href = redirectUrl;
+        }, 800);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const loginLink = document.getElementById("loginLink");
+        const backBtn = document.getElementById("backBtn");
+        const registerBox = document.getElementById("registerBox");
+        const registerForm = document.getElementById("registerForm");
+        const successToast = document.getElementById("successToast");
+
+        if (loginLink) {
+            loginLink.addEventListener("click", function(e) {
+                e.preventDefault();
+                addExitEffectAndRedirect(registerBox, loginLink.href);
+            });
+        }
+
+        if (backBtn) {
+            backBtn.addEventListener("click", function(e) {
+                e.preventDefault();
+                addExitEffectAndRedirect(
+                    registerBox,
+                    "http://localhost:8080/08_TC00224_LeKhangThinh_ASM_war/"
+                );
+            });
+        }
+
+        // Hiện toast + rớt xuống + tự động sang trang login
+        registerForm.addEventListener("submit", function(e) {
+            successToast.classList.add("show");
+
+            setTimeout(() => {
+                successToast.classList.remove("show");
+                registerBox.classList.add("fall-out");
+            }, 2000);
+
+            setTimeout(() => {
+                window.location.href = "${pageContext.request.contextPath}/login";
+            }, 2800);
+        });
+    });
+</script>
+
 </body>
 </html>

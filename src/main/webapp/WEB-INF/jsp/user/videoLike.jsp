@@ -15,7 +15,25 @@
     <title>Danh sách Video yêu thích</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <style>
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                    linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), /* overlay tối */
+                    url('https://wallpaperaccess.com/full/276258.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: 1; /* để overlay hiển thị rõ */
+            z-index: -1;
+        }
         .admin-navbar {
             background: linear-gradient(to bottom, #333 0%, #000 100%);
             border-radius: 10px;
@@ -64,6 +82,56 @@
             background-color: #333;
             color: #fff;
         }
+
+        .video-card {
+            border-radius: 15px;
+            overflow: hidden;
+            border: none;
+            background-color: rgba(0,0,0,0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .video-card body{
+            background-color: transparent;
+        }
+
+        .video-card footer{
+            background-color: transparent;
+        }
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+        }
+
+        .video-thumb img {
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid ;
+            transition: transform 0.3s ease;
+        }
+        .video-card:hover .video-thumb img {
+            transform: scale(1.05);
+        }
+
+        .action-btn {
+            border: none;
+            border-radius: 20px;
+            font-weight: 500;
+            padding: 6px 14px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .action-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .unlike-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff4757);
+            color: white;
+        }
+        .share-btn {
+            background: linear-gradient(45deg, #1dd1a1, #10ac84);
+            color: white;
+        }
+
     </style>
 </head>
 <body class="bg-black text-white">
@@ -95,35 +163,42 @@
 <div class="container">
     <h2 style="text-align: center">Danh sách Video yêu thích</h2>
     <c:if test="${!empty favorites}">
-        <table class="table table-bordered table-hover table-striped text-center align-middle">
-            <thead class="table-light">
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Poster</th>
-                <th>Views</th>
-                <th>Like Date</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
+        <div class="row g-4">
             <c:forEach var="f" items="${favorites}">
-                <tr>
-                    <td>${f.video.id}</td>
-                    <td>${f.video.title}</td>
-                    <td><a href="${pageContext.request.contextPath}/user/videoDetail?id=${f.video.id}"><c:set var="videoId" value="${fn:substringAfter(f.video.link, '/embed/')}" />
-                        <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="${f.video.title}" style="max-height: 300px;" /></a></td>
-                    <td>${f.video.views}</td>
-                    <td><fmt:formatDate value="${f.likeDate}" pattern="dd/MM/yyyy"/></td>
-                    <td>
-                        <form method="post" action="${pageContext.request.contextPath}/user/videoUnlike" style="display:inline;"> <input type="hidden" name="favoriteId" value="${f.id}" /> <button type="submit" class="btn btn-warning btn-sm">Unlike</button> </form>
-                        <a href="${pageContext.request.contextPath}/user/videoShare?id=${f.video.id}" class="btn btn-info text-white btn-sm">Share</a>
-                    </td>
-                </tr>
+                <div class="col-md-4">
+                    <div class="card video-card bg-dark text-white h-100 shadow-sm border-secondary">
+                        <a href="${pageContext.request.contextPath}/user/videoDetail?id=${f.video.id}" class="video-thumb">
+                            <c:set var="videoId" value="${fn:substringAfter(f.video.link, '/embed/')}" />
+                            <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg"
+                                 class="card-img-top"
+                                 alt="${f.video.title}">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title text-warning">${f.video.title}</h5>
+                            <p class="card-text mb-1">
+                                <small class="text-muted">👁 ${f.video.views} views</small><br>
+                                <small class="text-muted">❤️ <fmt:formatDate value="${f.likeDate}" pattern="dd/MM/yyyy"/></small>
+                            </p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <form method="post" action="${pageContext.request.contextPath}/user/videoUnlike" style="margin:0;">
+                                <input type="hidden" name="favoriteId" value="${f.id}" />
+                                <button type="submit" class="btn action-btn unlike-btn btn-sm">
+                                    <i class="fas fa-thumbs-down"></i> Unlike
+                                </button>
+                            </form>
+                            <a href="${pageContext.request.contextPath}/user/videoShare?id=${f.video.id}"
+                               class="btn action-btn share-btn btn-sm">
+                                <i class="fas fa-share-alt"></i> Share
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </c:forEach>
-            </tbody>
-        </table>
+        </div>
     </c:if>
+
+
     <c:if test="${empty favorites}">
         <div class="alert alert-warning text-center">Không có video nào được tìm thấy.</div>
     </c:if>
