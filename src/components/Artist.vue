@@ -1,35 +1,4 @@
 <template>
-    <div class="container-fluid">
-        <nav class="navbar navbar-expand-sm">
-            <div class="container-fluid">
-                <router-link class="navbar-brand" to="/">
-                    <img :src="item[0].image" alt="Logo" style="width: 150px;" />
-                </router-link>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapsibleNavbar">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/songs">
-                                <i class="fa-solid fa-film"></i> Bài hát
-                            </router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/artists">
-                                <i class="fa-solid fa-circle-info"></i> Nghệ sĩ
-                            </router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/account">
-                                <i class="fa-solid fa-user"></i> Tài khoản
-                            </router-link>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
         <section class="container row-g3"
             style="background-color: #f2f1ff; max-width: 100%; margin-top: 0; padding-top: 0;">
             <div class="row">
@@ -329,7 +298,6 @@
                 </article>
             </div>
         </section>
-    </div>
 </template>
 
 <script setup>
@@ -377,27 +345,6 @@ const item = ref([
 </script>
 
 <style scoped>
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
-}
-
-.navbar {
-    background-color: #3f3d56 !important;
-    font-size: large;
-}
-
-.nav-link,
-.dropdown-item {
-    color: #ffffff !important;
-}
-
-.dropdown-menu {
-    background-color: #3f3d56 !important;
-    font-size: large;
-}
-
 .tab-content .container {
     max-width: 90% !important;
 }
