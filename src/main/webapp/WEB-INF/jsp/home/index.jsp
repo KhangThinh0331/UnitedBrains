@@ -35,7 +35,7 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             background-image:
-                    linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), /* overlay tối */
+                    linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.5)), /* overlay tối */
                     url('https://wallpaperaccess.com/full/276258.jpg');
             background-size: cover;
             background-position: center;
@@ -111,7 +111,7 @@
             flex-shrink: 0;
             background-color: rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-            box-shadow: 0 0 8px rgba(165, 255, 117, 0.6);
+            box-shadow: 0 0 5px white;
             overflow: hidden;
             scroll-snap-align: start;
             display: flex;
@@ -121,7 +121,7 @@
         }
         .video-card:hover {
             width: 400px;
-            box-shadow: 0 0 15px #a5ff75;
+            box-shadow: 0 0 15px #000000;
             z-index: 10;
         }
         .video-card img {
@@ -260,7 +260,7 @@
 </div>
 
 <div class="container-fluid">
-    <h2 style="text-align: center; margin-bottom: 20px; font-weight: bold; text-transform: uppercase;">
+    <h2 style="text-align: center; margin-bottom: 20px; font-weight: bold; text-transform: uppercase; color: black" >
         DANH SÁCH VIDEO
     </h2>
     <c:if test="${!empty videos}">
