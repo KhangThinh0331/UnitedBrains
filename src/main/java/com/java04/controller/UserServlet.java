@@ -95,11 +95,11 @@ public class UserServlet extends HttpServlet {
             } else {
                 videoLink = "#"; // Hoặc xử lý lỗi
             }
-
-            Users user = new Users();
+            HttpSession session = request.getSession();
+            Users user = (Users) session.getAttribute("user");
             for (String email : emails) {
                 if (!email.trim().isEmpty()) {// Gửi email
-                    MailSender.send(email, user.getFullName()+ "đã chia sẽ 1 video với bạn" ,
+                    MailSender.send(email, user.getFullName()+ " đã chia sẽ 1 video với bạn" ,
                             video.getTitle() + "\n" + videoLink);
                 }
             }
