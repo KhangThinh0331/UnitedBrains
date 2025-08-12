@@ -1,288 +1,169 @@
 <template>
-        <section class="container row-g3"
-            style="background-color: #f2f1ff; max-width: 100%; margin-top: 0; padding-top: 0;">
-            <div class="row">
-                <aside class="col-sm-4 p-5 rounded-3"
-                    style="background-color: #3f3d56; margin-top: 50px; margin-bottom: 50px;">
+    <section class="container row-g3"
+        style="background-color: #f2f1ff; max-width: 100%; margin-top: 0; padding-top: 0;">
+        <div class="row">
+            <aside class="col-sm-4 p-5 rounded-3"
+                style="background-color: #3f3d56; margin-top: 50px; margin-bottom: 50px;">
 
-                    <!-- Tabs -->
-                    <ul class="nav nav-tabs" id="favoriteTabs" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="songs-tab" data-bs-toggle="tab" data-bs-target="#songs"
-                                type="button" role="tab" aria-controls="songs" aria-selected="true">
-                                Bài hát yêu thích
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="artists-tab" data-bs-toggle="tab" data-bs-target="#artists"
-                                type="button" role="tab" aria-controls="artists" aria-selected="false">
-                                Nghệ sĩ yêu thích
-                            </button>
-                        </li>
-                    </ul>
-
-                    <!-- Tab Content -->
-                    <div class="tab-content mt-3" id="favoriteTabsContent">
-
-                        <!-- Tab 1: Bài hát yêu thích -->
-                        <div class="tab-pane fade show active" id="songs" role="tabpanel" aria-labelledby="songs-tab">
-                            <ul class="list-group">
-                                <li class="list-group-item d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[12].image" alt=""
-                                            style="width: 75px; height: 75px; object-fit: cover;"
-                                            class="rounded-circle" />
-                                        <span>ただ君に晴れ</span>
-                                    </div>
-                                    <div class="d-flex gap-2">
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-play-fill"></i>
-                                        </button>
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-dash"></i>
-                                        </button>
-                                    </div>
-                                </li>
-
-                                <li class="list-group-item d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[13].image" alt=""
-                                            style="width: 75px; height: 75px; object-fit: cover;"
-                                            class="rounded-circle" />
-                                        <span>Love Story</span>
-                                    </div>
-                                    <div class="d-flex gap-2">
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-play-fill"></i>
-                                        </button>
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-dash"></i>
-                                        </button>
-                                    </div>
-                                </li>
-
-                                <li class="list-group-item d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[14].image" alt=""
-                                            style="width: 75px; height: 75px; object-fit: cover;"
-                                            class="rounded-circle" />
-                                        <span>Bắc Bling</span>
-                                    </div>
-                                    <div class="d-flex gap-2">
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-play-fill"></i>
-                                        </button>
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-dash"></i>
-                                        </button>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Tab 2: Nghệ sĩ yêu thích -->
-                        <div class="tab-pane fade" id="artists" role="tabpanel" aria-labelledby="artists-tab">
-                            <ul class="list-group">
-                                <li class="list-group-item d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[15].image" alt=""
-                                            style="width: 75px; height: 75px; object-fit: cover;"
-                                            class="rounded-circle" />
-                                        <span>ヨルシカ</span>
-                                    </div>
-                                    <div class="d-flex gap-2">
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-dash"></i>
-                                        </button>
-                                    </div>
-                                </li>
-
-                                <li class="list-group-item d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[16].image" alt=""
-                                            style="width: 75px; height: 75px; object-fit: cover;"
-                                            class="rounded-circle" />
-                                        <span>Taylor Swift</span>
-                                    </div>
-                                    <div class="d-flex gap-2">
-
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-dash"></i>
-                                        </button>
-                                    </div>
-                                </li>
-
-                                <li class="list-group-item d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[17].image" alt=""
-                                            style="width: 75px; height: 75px; object-fit: cover;"
-                                            class="rounded-circle" />
-                                        <span>Ado</span>
-                                    </div>
-                                    <div class="d-flex gap-2">
-
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-dash"></i>
-                                        </button>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-
-                </aside>
-                <article class="col-sm-8 p-5">
-
-                    <div id="carouselExample" class="carousel slide carousel-fade" data-bs-ride="carousel"
-                        data-bs-interval="5000">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <a href="#">
-                                    <div class="carousel-img-wrapper">
-                                        <img :src="item[1].image" class="carousel-img d-block w-100" alt="Ảnh 1" />
-                                        <div class="caption">Cruel Summer</div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="carousel-item">
-                                <a href="#">
-                                    <div class="carousel-img-wrapper">
-                                        <img :src="item[2].image" class="carousel-img d-block w-100" alt="Ảnh 2" />
-                                        <div class="caption">春泥棒</div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="carousel-item">
-                                <a href="#">
-                                    <div class="carousel-img-wrapper">
-                                        <img :src="item[3].image" class="carousel-img d-block w-100" alt="Ảnh 3" />
-                                        <div class="caption">Lovesick Girls</div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Điều khiển trái/phải -->
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <!-- Tabs -->
+                <ul class="nav nav-tabs" id="favoriteTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="songs-tab" data-bs-toggle="tab" data-bs-target="#songs"
+                            type="button" role="tab" aria-controls="songs" aria-selected="true">
+                            Bài hát yêu thích
                         </button>
-
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="artists-tab" data-bs-toggle="tab" data-bs-target="#artists"
+                            type="button" role="tab" aria-controls="artists" aria-selected="false">
+                            Nghệ sĩ yêu thích
                         </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content mt-3" id="favoriteTabsContent">
+
+                    <!-- Tab 1: Bài hát yêu thích -->
+                    <div class="tab-pane fade show active" id="songs" role="tabpanel" aria-labelledby="songs-tab">
+                        <ul class="list-group">
+                            <li v-for="song in favoriteSongs" :key="song.id"
+                                class="list-group-item d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <img :src="song.image" alt="" style="width: 75px; height: 75px; object-fit: cover;"
+                                        class="rounded-circle" />
+                                    <span>{{ song.title }}</span>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-play-fill"></i>
+                                    </button>
+                                    <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+                                </div>
+                            </li>
+                            <li v-if="favoriteSongs.length === 0" class="list-group-item text-center text-muted">Chưa có
+                                bài hát yêu thích</li>
+                        </ul>
                     </div>
 
-                    <br>
-                    <h2 class="mb-3" style="color: #42399f;">Bài hát nổi bật</h2>
-                    <div class="card p-3" style="background-color: #3f3d56; color: #fff;">
-                        <div class="d-flex flex-wrap gap-3 justify-content-start">
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[4].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    ただ君に晴れ
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[5].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    What is Love?
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[6].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    Love Story
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[7].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    Bắc Bling
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
+                    <!-- Tab 2: Nghệ sĩ yêu thích -->
+                    <div class="tab-pane fade" id="artists" role="tabpanel" aria-labelledby="artists-tab">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <img :src="items[15].image" alt=""
+                                        style="width: 75px; height: 75px; object-fit: cover;" class="rounded-circle" />
+                                    <span>ヨルシカ</span>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <img :src="items[16].image" alt=""
+                                        style="width: 75px; height: 75px; object-fit: cover;" class="rounded-circle" />
+                                    <span>Taylor Swift</span>
+                                </div>
+                                <div class="d-flex gap-2">
+
+                                    <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <img :src="items[17].image" alt=""
+                                        style="width: 75px; height: 75px; object-fit: cover;" class="rounded-circle" />
+                                    <span>Ado</span>
+                                </div>
+                                <div class="d-flex gap-2">
+
+                                    <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            </aside>
+            <article class="col-sm-8 p-5">
+
+                <div id="carouselExample" class="carousel slide carousel-fade" data-bs-ride="carousel"
+                    data-bs-interval="5000">
+                    <div class="carousel-inner">
+                        <div v-for="(slide, index) in carouselSlides" :key="index"
+                            :class="['carousel-item', { active: index === 0 }]">
+                            <div class="carousel-img-wrapper">
+                                <router-link :to="`/song/${slide.id}`">
+                                    <img :src="slide.image" class="carousel-img d-block w-100"
+                                        :alt="'Ảnh ' + (index + 1)" />
+                                </router-link>
+                                <div class="caption">{{ slide.title }}</div>
                             </div>
                         </div>
                     </div>
-                    <br>
-                    <h2 class="mb-3" style="color: #42399f;">Nghệ sĩ nổi bật</h2>
-                    <div class="card p-3" style="background-color: #3f3d56; color: #fff;">
-                        <div class="d-flex flex-wrap gap-3 justify-content-start">
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[8].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
+                    <!-- Điều khiển trái/phải -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </button>
+
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </button>
+                </div>
+
+                <br>
+                <h2 class="mb-3" style="color: #42399f;">Bài hát nổi bật</h2>
+                <div class="card p-3" style="background-color: #3f3d56; color: #fff;">
+                    <div class="d-flex flex-wrap gap-3 justify-content-start">
+                        <div v-for="(song, index) in songs" :key="index" class="text-center" style="width: 200px;">
+                            <router-link :to="`/song/${song.id}`">
+                                <img :src="song.image" :alt="song.title"
+                                    style="width: 150px; height: 150px; object-fit: cover; cursor: pointer;"
                                     class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    ヨルシカ
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[9].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    Taylor Swift
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[10].image" alt=""
-                                    style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    BLACKPINK
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[11].image" alt=""
-                                    style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    Ado
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
+                            </router-link>
+                            <p class="card-text fs-5">{{ song.title }}</p>
+                            <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                                <i class="bi bi-play-fill"></i>
+                            </button>
+                            <button @click="addToFavorites(song)" class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                                <i class="bi bi-plus"></i>
+                            </button>
                         </div>
                     </div>
-                </article>
-            </div>
-        </section>
+                </div>
+                <br>
+                <h2 class="mb-3" style="color: #42399f;">Nghệ sĩ nổi bật</h2>
+                <div class="card p-3" style="background-color: #3f3d56; color: #fff;">
+                    <div class="d-flex flex-wrap gap-3 justify-content-start">
+                        <div v-for="(artist, index) in artists" :key="index" class="text-center" style="width: 200px;">
+                            <router-link :to="`/artist/${artist.id}`">
+                                <img :src="artist.image" :alt="artist.title"
+                                    style="width: 150px; height: 150px; object-fit: cover; cursor: pointer;"
+                                    class="rounded-circle mb-2" />
+                            </router-link>
+                            <p class="card-text fs-5">{{ artist.title }}</p>
+                            <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
+                                    class="bi bi-plus"></i> </button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
 </template>
 
 <script setup>
@@ -305,7 +186,7 @@ import img15 from '../assets/images/bacbling.jpg'
 import img16 from '../assets/images/yorushika.jpg'
 import img17 from '../assets/images/taylorswift.jpg'
 import img18 from '../assets/images/ado.jpg'
-const item = ref([
+const items = ref([
     { image: img1 },
     { image: img2 },
     { image: img3 },
@@ -325,11 +206,49 @@ const item = ref([
     { image: img17 },
     { image: img18 }
 ])
+
+const carouselSlides = ref([
+    { id: 1, image: img2, title: 'Cruel Summer' },
+    { id: 2, image: img3, title: '春泥棒' },
+    { id: 3, image: img4, title: 'Lovesick Girls' }
+])
+
+import { computed } from 'vue'
+
+// Nhận prop từ component cha
+const props = defineProps({
+    item: {
+        type: Array,
+        required: true
+    }
+})
+
+// Tính toán danh sách bài hát hiển thị
+const songs = computed(() => [
+    { id: 4, image: img5, title: 'ただ君に晴れ' },
+    { id: 5, image: img6, title: 'What is Love?' },
+    { id: 6, image: img7, title: 'Love Story' },
+    { id: 7, image: img8, title: 'Bắc Bling' }
+])
+
+const artists = computed(() => [
+    { id: 1, image: img9, title: 'ヨルシカ' },
+    { id: 2, image: img10, title: 'Taylor Swift' },
+    { id: 3, image: img11, title: 'BLACKPINK' },
+    { id: 4, image: img12, title: 'Ado' }
+])
+
+import { useFavoritesStore } from '../favorites.js'
+
+const favoritesStore = useFavoritesStore()
+const favoriteSongs = favoritesStore.favorites
+
+function addToFavorites(song) {
+  favoritesStore.addFavorite(song)
+}
 </script>
 
 <style scoped>
-
-
 .tab-content .container {
     max-width: 90% !important;
 }

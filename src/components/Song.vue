@@ -1,303 +1,133 @@
 <template>
-        <section class="container row-g3"
-            style="background-color: #f2f1ff; max-width: 100%; margin-top: 0; padding-top: 0;">
-            <div class="row">
-                <aside class="col-sm-4 p-5 rounded-3"
-                    style="background-color: #3f3d56; margin-top: 50px; margin-bottom: 50px;">
+    <section class="container row-g3"
+        style="background-color: #f2f1ff; max-width: 100%; margin-top: 0; padding-top: 0;">
+        <div class="row">
+            <aside class="col-sm-4 p-5 rounded-3"
+                style="background-color: #3f3d56; margin-top: 50px; margin-bottom: 50px;">
 
-                    <!-- Tabs -->
-                    <ul class="nav nav-tabs" id="favoriteTabs" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="songs-tab" data-bs-toggle="tab" data-bs-target="#songs"
-                                type="button" role="tab" aria-controls="songs" aria-selected="true">
-                                Bài hát yêu thích
+                <!-- Tabs -->
+                <ul class="nav nav-tabs" id="favoriteTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="songs-tab" data-bs-toggle="tab" data-bs-target="#songs"
+                            type="button" role="tab" aria-controls="songs" aria-selected="true">
+                            Bài hát yêu thích
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="artists-tab" data-bs-toggle="tab" data-bs-target="#artists"
+                            type="button" role="tab" aria-controls="artists" aria-selected="false">
+                            Nghệ sĩ yêu thích
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content mt-3" id="favoriteTabsContent">
+
+                    <!-- Tab 1: Bài hát yêu thích -->
+                    <div class="tab-pane fade show active" id="songs" role="tabpanel" aria-labelledby="songs-tab">
+                        <ul class="list-group">
+                            <li v-for="song in favoriteSongs" :key="song.id"
+                                class="list-group-item d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <img :src="song.image" alt="" style="width: 75px; height: 75px; object-fit: cover;"
+                                        class="rounded-circle" />
+                                    <span>{{ song.title }}</span>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-play-fill"></i>
+                                    </button>
+                                    <button @click="removeFromFavorites(song)" class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+                                </div>
+                            </li>
+                            <li v-if="favoriteSongs.length === 0" class="list-group-item text-center text-muted">Chưa có
+                                bài hát yêu thích</li>
+                        </ul>
+                    </div>
+
+                    <!-- Tab 2: Nghệ sĩ yêu thích -->
+                    <div class="tab-pane fade" id="artists" role="tabpanel" aria-labelledby="artists-tab">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <img :src="item[4].image" alt=""
+                                        style="width: 75px; height: 75px; object-fit: cover;" class="rounded-circle" />
+                                    <span>ヨルシカ</span>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <img :src="item[5].image" alt=""
+                                        style="width: 75px; height: 75px; object-fit: cover;" class="rounded-circle" />
+                                    <span>Taylor Swift</span>
+                                </div>
+                                <div class="d-flex gap-2">
+
+                                    <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <img :src="item[6].image" alt=""
+                                        style="width: 75px; height: 75px; object-fit: cover;" class="rounded-circle" />
+                                    <span>Ado</span>
+                                </div>
+                                <div class="d-flex gap-2">
+
+                                    <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            </aside>
+            <article class="col-sm-8 p-5">
+                <div class="input-group mb-3 custom-search">
+                    <span class="input-group-text border-0 bg-transparent text-white">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" class="form-control custom-search-input" placeholder="Tìm kiếm bài hát..."
+                        id="searchInput" />
+                </div>
+                <h2 class="mb-3" style="color: #42399f;">Danh sách bài hát</h2>
+                <div class="card p-3" style="background-color: #3f3d56; color: #fff;">
+                    <div class="d-flex flex-wrap gap-3 justify-content-start">
+                        <div v-for="(song, index) in songs" :key="index" class="text-center" style="width: 200px;">
+                            <router-link :to="`/song/${song.id}`">
+                                <img :src="song.image" :alt="song.title"
+                                    style="width: 150px; height: 150px; object-fit: cover; cursor: pointer;"
+                                    class="rounded-circle mb-2" />
+                            </router-link>
+                            <p class="card-text fs-5">{{ song.title }}</p>
+                            <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                                <i class="bi bi-play-fill"></i>
                             </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="artists-tab" data-bs-toggle="tab" data-bs-target="#artists"
-                                type="button" role="tab" aria-controls="artists" aria-selected="false">
-                                Nghệ sĩ yêu thích
+                            <button @click="addToFavorites(song)" class="btn rounded-circle pink-button"
+                                style="width: 40px; height: 40px;">
+                                <i class="bi bi-plus"></i>
                             </button>
-                        </li>
-                    </ul>
-
-                    <!-- Tab Content -->
-                    <div class="tab-content mt-3" id="favoriteTabsContent">
-
-                        <!-- Tab 1: Bài hát yêu thích -->
-                        <div class="tab-pane fade show active" id="songs" role="tabpanel" aria-labelledby="songs-tab">
-                            <ul class="list-group">
-                                <li class="list-group-item d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[1].image" alt=""
-                                            style="width: 75px; height: 75px; object-fit: cover;"
-                                            class="rounded-circle" />
-                                        <span>ただ君に晴れ</span>
-                                    </div>
-                                    <div class="d-flex gap-2">
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-play-fill"></i>
-                                        </button>
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-dash"></i>
-                                        </button>
-                                    </div>
-                                </li>
-
-                                <li class="list-group-item d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[2].image" alt=""
-                                            style="width: 75px; height: 75px; object-fit: cover;"
-                                            class="rounded-circle" />
-                                        <span>Love Story</span>
-                                    </div>
-                                    <div class="d-flex gap-2">
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-play-fill"></i>
-                                        </button>
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-dash"></i>
-                                        </button>
-                                    </div>
-                                </li>
-
-                                <li class="list-group-item d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[3].image" alt=""
-                                            style="width: 75px; height: 75px; object-fit: cover;"
-                                            class="rounded-circle" />
-                                        <span>Bắc Bling</span>
-                                    </div>
-                                    <div class="d-flex gap-2">
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-play-fill"></i>
-                                        </button>
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-dash"></i>
-                                        </button>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Tab 2: Nghệ sĩ yêu thích -->
-                        <div class="tab-pane fade" id="artists" role="tabpanel" aria-labelledby="artists-tab">
-                            <ul class="list-group">
-                                <li class="list-group-item d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[4].image" alt=""
-                                            style="width: 75px; height: 75px; object-fit: cover;"
-                                            class="rounded-circle" />
-                                        <span>ヨルシカ</span>
-                                    </div>
-                                    <div class="d-flex gap-2">
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-dash"></i>
-                                        </button>
-                                    </div>
-                                </li>
-
-                                <li class="list-group-item d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[5].image" alt=""
-                                            style="width: 75px; height: 75px; object-fit: cover;"
-                                            class="rounded-circle" />
-                                        <span>Taylor Swift</span>
-                                    </div>
-                                    <div class="d-flex gap-2">
-
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-dash"></i>
-                                        </button>
-                                    </div>
-                                </li>
-
-                                <li class="list-group-item d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <img :src="item[6].image" alt=""
-                                            style="width: 75px; height: 75px; object-fit: cover;"
-                                            class="rounded-circle" />
-                                        <span>Ado</span>
-                                    </div>
-                                    <div class="d-flex gap-2">
-
-                                        <button class="btn rounded-circle pink-button"
-                                            style="width: 40px; height: 40px;">
-                                            <i class="bi bi-dash"></i>
-                                        </button>
-                                    </div>
-                                </li>
-                            </ul>
                         </div>
                     </div>
-
-
-                </aside>
-                <article class="col-sm-8 p-5">
-                    <div class="input-group mb-3 custom-search">
-                        <span class="input-group-text border-0 bg-transparent text-white">
-                            <i class="bi bi-search"></i>
-                        </span>
-                        <input type="text" class="form-control custom-search-input" placeholder="Tìm kiếm bài hát..."
-                            id="searchInput" />
-                    </div>
-                    <h2 class="mb-3" style="color: #42399f;">Danh sách bài hát</h2>
-                    <div class="card p-3" style="background-color: #3f3d56; color: #fff;">
-                        <div class="d-flex flex-wrap gap-3 justify-content-start">
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[7].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    晴る
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[8].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                   アイドル
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[9].image" alt="" style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    うっせぇわ
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[10].image" alt=""
-                                    style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    Show
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[11].image" alt=""
-                                    style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    紅蓮華
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[12].image" alt=""
-                                    style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    夜に駆ける
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[13].image" alt=""
-                                    style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    Lion Heart
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[14].image" alt=""
-                                    style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    Unstoppable
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[15].image" alt=""
-                                    style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    Blank Space
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[16].image" alt=""
-                                    style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    Legends Never Die
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[17].image" alt=""
-                                    style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    Hope Is the Thing With Feathers
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                            <div class="text-center" style="width: 200px;">
-                                <img :src="item[18].image" alt=""
-                                    style="width: 150px; height: 150px; object-fit: cover;"
-                                    class="rounded-circle mb-2" />
-                                <p class="card-text fs-5">
-                                    You Didn't Know
-                                </p>
-                                <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-play-fill"></i> </button> <button
-                                    class="btn rounded-circle pink-button" style="width: 40px; height: 40px;"> <i
-                                        class="bi bi-plus"></i> </button>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </section>
+                </div>
+            </article>
+        </div>
+    </section>
 </template>
 
 <script setup>
@@ -341,11 +171,39 @@ const item = ref([
     { image: img17 },
     { image: img18 },
     { image: img19 }
-]) 
+])
+
+const songs = ref([
+    { id: 8, image: img8, title: '晴る' },
+    { id: 9, image: img9, title: 'アイドル' },
+    { id: 10, image: img10, title: 'うっせぇわ' },
+    { id: 11, image: img11, title: 'Show' },
+    { id: 12, image: img12, title: '紅蓮華' },
+    { id: 13, image: img13, title: '夜に駆ける' },
+    { id: 14, image: img14, title: 'Lion Heart' },
+    { id: 15, image: img15, title: 'Unstoppable' },
+    { id: 16, image: img16, title: 'Blank Space' },
+    { id: 17, image: img17, title: 'Legends Never Die' },
+    { id: 18, image: img18, title: 'Hope Is the Thing With Feathers' },
+    { id: 19, image: img19, title: 'You Didn’t Know' },
+])
+
+import { useFavoritesStore } from '../favorites.js'
+
+import { computed } from 'vue'
+
+const favoritesStore = useFavoritesStore()
+const favoriteSongs = computed(() => favoritesStore.favorites)
+
+function removeFromFavorites(song) {
+  favoritesStore.removeFavorite(song)
+}
+function addToFavorites(song) {
+  favoritesStore.addFavorite(song)
+}
 </script>
 
 <style scoped>
-
 .tab-content .container {
     max-width: 90% !important;
 }
@@ -366,44 +224,47 @@ h3 {
     border-radius: 12px;
     box-shadow: inset 0 0 0 1px #555;
     transition: box-shadow 0.3s ease, background-color 0.3s ease;
-    height: 52px; /* Tăng chiều cao khung */
-  }
+    height: 52px;
+    /* Tăng chiều cao khung */
+}
 
-  .custom-search:hover {
+.custom-search:hover {
     box-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
-  }
+}
 
-  .custom-search-input {
+.custom-search-input {
     background-color: #3f3d56;
     color: white;
     border: none;
     border-radius: 0 12px 12px 0;
-    height: 100%; /* Chiều cao bằng nhóm input */
+    height: 100%;
+    /* Chiều cao bằng nhóm input */
     font-size: 1rem;
-  }
+}
 
-  .custom-search-input:focus {
+.custom-search-input:focus {
     outline: none;
     box-shadow: none;
     background-color: #484660;
     color: white;
-  }
+}
 
-  .input-group-text {
+.input-group-text {
     background-color: #3f3d56;
     border: none;
     border-radius: 12px 0 0 12px;
     height: 100%;
-  }
+}
 
-  .input-group-text i {
+.input-group-text i {
     color: white;
     font-size: 1.2rem;
-  }
+}
 
-  .custom-search-input::placeholder {
-  color: white;
-  opacity: 1; /* Đảm bảo không bị mờ nhạt */
+.custom-search-input::placeholder {
+    color: white;
+    opacity: 1;
+    /* Đảm bảo không bị mờ nhạt */
 }
 
 .nav-tabs .nav-link.active {

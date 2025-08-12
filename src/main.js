@@ -6,4 +6,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import router from './router'
-createApp(App).use(router).mount('#app')
+import { createPinia } from 'pinia'
+const pinia = createPinia()
+createApp(App).use(router).use(pinia).mount('#app')
