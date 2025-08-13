@@ -38,7 +38,8 @@
                                     <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
                                         <i class="bi bi-play-fill"></i>
                                     </button>
-                                    <button @click="removeFromFavorites(song)" class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                                    <button @click="favoritesStore.removeFavorite(song)"
+                                        class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
                                         <i class="bi bi-dash"></i>
                                     </button>
                                 </div>
@@ -51,46 +52,24 @@
                     <!-- Tab 2: Nghệ sĩ yêu thích -->
                     <div class="tab-pane fade" id="artists" role="tabpanel" aria-labelledby="artists-tab">
                         <ul class="list-group">
-                            <li class="list-group-item d-flex align-items-center justify-content-between">
+                            <li v-for="artist in favoriteArtists" :key="artist.id"
+                                class="list-group-item d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-center gap-3">
-                                    <img :src="item[4].image" alt=""
+                                    <img :src="artist.image" alt=""
                                         style="width: 75px; height: 75px; object-fit: cover;" class="rounded-circle" />
-                                    <span>ヨルシカ</span>
+                                    <span>{{ artist.title }}</span>
                                 </div>
                                 <div class="d-flex gap-2">
-                                    <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+
+                                    <button @click="favoritesStore.removeFavoriteArtist(artist)"
+                                        class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
                                         <i class="bi bi-dash"></i>
                                     </button>
                                 </div>
                             </li>
-
-                            <li class="list-group-item d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-center gap-3">
-                                    <img :src="item[5].image" alt=""
-                                        style="width: 75px; height: 75px; object-fit: cover;" class="rounded-circle" />
-                                    <span>Taylor Swift</span>
-                                </div>
-                                <div class="d-flex gap-2">
-
-                                    <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
-                                        <i class="bi bi-dash"></i>
-                                    </button>
-                                </div>
-                            </li>
-
-                            <li class="list-group-item d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-center gap-3">
-                                    <img :src="item[6].image" alt=""
-                                        style="width: 75px; height: 75px; object-fit: cover;" class="rounded-circle" />
-                                    <span>Ado</span>
-                                </div>
-                                <div class="d-flex gap-2">
-
-                                    <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
-                                        <i class="bi bi-dash"></i>
-                                    </button>
-                                </div>
-                            </li>
+                            <li v-if="favoriteArtists.length === 0" class="list-group-item text-center text-muted">Chưa
+                                có
+                                nghệ sĩ yêu thích</li>
                         </ul>
                     </div>
                 </div>
@@ -103,12 +82,13 @@
                         <i class="bi bi-search"></i>
                     </span>
                     <input type="text" class="form-control custom-search-input" placeholder="Tìm kiếm bài hát..."
-                        id="searchInput" />
+                        v-model="searchQuery" />
                 </div>
                 <h2 class="mb-3" style="color: #42399f;">Danh sách bài hát</h2>
                 <div class="card p-3" style="background-color: #3f3d56; color: #fff;">
                     <div class="d-flex flex-wrap gap-3 justify-content-start">
-                        <div v-for="(song, index) in songs" :key="index" class="text-center" style="width: 200px;">
+                        <div v-for="(song, index) in filteredSongs" :key="index" class="text-center"
+                            style="width: 200px;">
                             <router-link :to="`/song/${song.id}`">
                                 <img :src="song.image" :alt="song.title"
                                     style="width: 150px; height: 150px; object-fit: cover; cursor: pointer;"
@@ -188,19 +168,27 @@ const songs = ref([
     { id: 19, image: img19, title: 'You Didn’t Know' },
 ])
 
-import { useFavoritesStore } from '../favorites.js'
-
 import { computed } from 'vue'
+import { useFavoritesStore } from '../favorites.js'
 
 const favoritesStore = useFavoritesStore()
 const favoriteSongs = computed(() => favoritesStore.favorites)
+const favoriteArtists = computed(() => favoritesStore.favoriteArtist)
 
-function removeFromFavorites(song) {
-  favoritesStore.removeFavorite(song)
-}
 function addToFavorites(song) {
-  favoritesStore.addFavorite(song)
+    favoritesStore.addFavorite(song)
 }
+
+const searchQuery = ref('')
+
+// Tạo danh sách đã lọc
+const filteredSongs = computed(() => {
+    const keyword = searchQuery.value.trim().toLowerCase()
+    if (!keyword) return songs.value
+    return songs.value.filter(song =>
+        song.title.toLowerCase().includes(keyword)
+    )
+})
 </script>
 
 <style scoped>

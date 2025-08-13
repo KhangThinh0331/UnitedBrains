@@ -10,9 +10,29 @@ export const useFavoritesStore = defineStore('favorites', () => {
     }
   }
 
-   function removeFavorite(song) {
-    favorites.value = favorites.value.filter(item => item.id !== song.id)
+  function removeFavorite(song) {
+    favorites.value = favorites.value.filter(item => String(item.id) !== String(song.id))
   }
 
-  return { favorites, addFavorite, removeFavorite }
+  const favoriteArtist = ref([])
+
+  function addFavoriteArtist(artist) {
+    const exists = favoriteArtist.value.find(
+      item => item.title.trim().toLowerCase() === artist.title.trim().toLowerCase()
+    )
+    if (!exists) {
+      favoriteArtist.value.push(artist)
+    }
+  }
+
+  function removeFavoriteArtist(artist) {
+    favoriteArtist.value = favoriteArtist.value.filter(
+      item => item.title?.trim().toLowerCase() !== artist.title?.trim().toLowerCase()
+    )
+  }
+
+  return {
+    favorites, addFavorite, removeFavorite,
+    favoriteArtist, addFavoriteArtist, removeFavoriteArtist
+  }
 })

@@ -38,7 +38,7 @@
                                     <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
                                         <i class="bi bi-play-fill"></i>
                                     </button>
-                                    <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                                    <button @click="favoritesStore.removeFavorite(song)" class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
                                         <i class="bi bi-dash"></i>
                                     </button>
                                 </div>
@@ -51,46 +51,22 @@
                     <!-- Tab 2: Nghệ sĩ yêu thích -->
                     <div class="tab-pane fade" id="artists" role="tabpanel" aria-labelledby="artists-tab">
                         <ul class="list-group">
-                            <li class="list-group-item d-flex align-items-center justify-content-between">
+                            <li v-for="artist in favoriteArtists" :key="artist.id"
+                                class="list-group-item d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-center gap-3">
-                                    <img :src="item[4].image" alt=""
-                                        style="width: 75px; height: 75px; object-fit: cover;" class="rounded-circle" />
-                                    <span>ヨルシカ</span>
+                                    <img :src="artist.image" alt="" style="width: 75px; height: 75px; object-fit: cover;"
+                                        class="rounded-circle" />
+                                    <span>{{ artist.title }}</span>
                                 </div>
                                 <div class="d-flex gap-2">
-                                    <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                                    
+                                    <button @click="favoritesStore.removeFavoriteArtist(artist)" class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
                                         <i class="bi bi-dash"></i>
                                     </button>
                                 </div>
                             </li>
-
-                            <li class="list-group-item d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-center gap-3">
-                                    <img :src="item[5].image" alt=""
-                                        style="width: 75px; height: 75px; object-fit: cover;" class="rounded-circle" />
-                                    <span>Taylor Swift</span>
-                                </div>
-                                <div class="d-flex gap-2">
-
-                                    <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
-                                        <i class="bi bi-dash"></i>
-                                    </button>
-                                </div>
-                            </li>
-
-                            <li class="list-group-item d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-center gap-3">
-                                    <img :src="item[6].image" alt=""
-                                        style="width: 75px; height: 75px; object-fit: cover;" class="rounded-circle" />
-                                    <span>Ado</span>
-                                </div>
-                                <div class="d-flex gap-2">
-
-                                    <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
-                                        <i class="bi bi-dash"></i>
-                                    </button>
-                                </div>
-                            </li>
+                            <li v-if="favoriteArtists.length === 0" class="list-group-item text-center text-muted">Chưa có
+                                nghệ sĩ yêu thích</li>
                         </ul>
                     </div>
                 </div>
@@ -104,7 +80,7 @@
                         <img :src="artist.image" alt="" class="rounded"
                             style="width: 200px; height: 200px; object-fit: cover;" />
                         <div class="d-flex flex-row gap-3">
-                            <button class="btn rounded-circle pink-button" style="width: 120px; height: 120px;">
+                            <button @click="addArtists(artist)" class="btn rounded-circle pink-button" style="width: 120px; height: 120px;">
                                 <i class="bi bi-plus" style="font-size: 4rem;"></i>
                             </button>
                         </div>
@@ -284,11 +260,16 @@ const artists = [
 
 const artist = artists.find(s => s.id === parseInt(route.params.id))
 
+import { computed } from 'vue'
 import { useFavoritesStore } from '../favorites.js'
 
 const favoritesStore = useFavoritesStore()
-const favoriteSongs = favoritesStore.favorites
+const favoriteSongs = computed(() => favoritesStore.favorites)
+const favoriteArtists = computed(() => favoritesStore.favoriteArtist)
 
+function addArtists(artist) {
+  favoritesStore.addFavoriteArtist(artist)
+}
 function addToFavorites(song) {
   favoritesStore.addFavorite(song)
 }

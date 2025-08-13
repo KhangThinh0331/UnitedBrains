@@ -1,8 +1,8 @@
 <template>
   <section>
-    <div class="login-container">
+    <div v-if="!authStore.user" class="login-container">
       <h3>Đăng Nhập</h3>
-      <button type="button" class="btn btn-google w-100">
+      <button type="button" class="btn btn-google w-100" @click="authStore.loginWithGoogle">
         <i class="fab fa-google me-2"></i> Đăng nhập bằng Google
       </button>
     </div>
@@ -10,16 +10,8 @@
 </template>
 
 <script setup>
-// Ở đây bạn có thể thêm logic gọi API hoặc Firebase Google Auth
-// Ví dụ với Firebase:
-// import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-// const loginWithGoogle = () => {
-//   const auth = getAuth();
-//   const provider = new GoogleAuthProvider();
-//   signInWithPopup(auth, provider)
-//     .then(result => console.log("Đăng nhập thành công:", result))
-//     .catch(error => console.error("Lỗi:", error));
-// }
+import { useAuthStore } from '../authStore'
+const authStore = useAuthStore()
 </script>
 
 <style scoped>

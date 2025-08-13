@@ -24,11 +24,18 @@
               </router-link>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown"><i
-                  class="fa-solid fa-user"></i> Tài khoản</a>
+              <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown">
+                <i class="fa-solid fa-user"></i>
+                <span v-if="authStore.user">{{ authStore.user.displayName }}</span>
+                <span v-else>Tài khoản</span>
+              </a>
               <ul class="dropdown-menu">
-                <li><router-link class="nav-link" to="/account">Đăng nhập</router-link></li>
-                <li><router-link class="nav-link" to="">Đăng xuất</router-link></li>
+                <li v-if="!authStore.user">
+                  <router-link class="dropdown-item" to="/account">Đăng nhập</router-link>
+                </li>
+                <li v-else>
+                  <button class="dropdown-item" @click="authStore.logout">Đăng xuất</button>
+                </li>
               </ul>
             </li>
             <li class="nav-item">
@@ -56,6 +63,11 @@
   </div>
 </template>
 
+<script setup>
+import { useAuthStore } from './authStore' // đường dẫn tới store của bạn
+const authStore = useAuthStore()
+</script>
+
 <style scoped>
 body {
   font-family: 'Poppins', sans-serif;
@@ -81,6 +93,7 @@ body {
 .premium-btn {
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
+
 .premium-btn:hover {
   transform: scale(1.05);
 }
