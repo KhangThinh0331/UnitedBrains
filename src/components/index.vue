@@ -1,9 +1,9 @@
 <template>
     <section class="container row-g3"
-        style="background-color: #f2f1ff; max-width: 100%; margin-top: 0; padding-top: 0;">
+        style="background-color: transparent; max-width: 100%; margin-top: 0; padding-top: 0;">
         <div class="row">
             <aside class="col-sm-4 p-5 rounded-3"
-                style="background-color: #3f3d56; margin-top: 50px; margin-bottom: 50px;">
+                style="background-color: rgba(0, 0, 0, 0.7); margin-top: 50px; margin-bottom: 50px;">
 
                 <!-- Tabs -->
                 <ul class="nav nav-tabs" id="favoriteTabs" role="tablist">
@@ -35,7 +35,7 @@
                                     <span>{{ song.title }}</span>
                                 </div>
                                 <div class="d-flex gap-2">
-                                    <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                                    <button @click="audioPlay(song)" class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
                                         <i class="bi bi-play-fill"></i>
                                     </button>
                                     <button @click="favoritesStore.removeFavorite(song)" class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
@@ -103,7 +103,7 @@
 
                 <br>
                 <h2 class="mb-3" style="color: #42399f;">Bài hát nổi bật</h2>
-                <div class="card p-3" style="background-color: #3f3d56; color: #fff;">
+                <div class="card p-3" style="background-color: rgba(0, 0, 0, 0.7); color: #fff;">
                     <div class="d-flex flex-wrap gap-3 justify-content-start">
                         <div v-for="(song, index) in songs" :key="index" class="text-center" style="width: 200px;">
                             <router-link :to="`/song/${song.id}`">
@@ -112,7 +112,7 @@
                                     class="rounded-circle mb-2" />
                             </router-link>
                             <p class="card-text fs-5">{{ song.title }}</p>
-                            <button class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
+                            <button @click="audioPlay(song)" class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
                                 <i class="bi bi-play-fill"></i>
                             </button>
                             <button @click="addToFavorites(song)" class="btn rounded-circle pink-button" style="width: 40px; height: 40px;">
@@ -123,7 +123,7 @@
                 </div>
                 <br>
                 <h2 class="mb-3" style="color: #42399f;">Nghệ sĩ nổi bật</h2>
-                <div class="card p-3" style="background-color: #3f3d56; color: #fff;">
+                <div class="card p-3" style="background-color: rgba(0, 0, 0, 0.7); color: #fff;">
                     <div class="d-flex flex-wrap gap-3 justify-content-start">
                         <div v-for="(artist, index) in artists" :key="index" class="text-center" style="width: 200px;">
                             <router-link :to="`/artist/${artist.id}`">
@@ -162,6 +162,10 @@ import img15 from '../assets/images/bacbling.jpg'
 import img16 from '../assets/images/yorushika.jpg'
 import img17 from '../assets/images/taylorswift.jpg'
 import img18 from '../assets/images/ado.jpg'
+import img19 from '../assets/music/ヨルシカ - ただ君に晴れ (MUSIC VIDEO) - ヨルシカ _ n-buna Official.mp3'
+import img20 from '../assets/music/TWICE What is Love M_V - JYP Entertainment.mp3'
+import img21 from '../assets/music/Taylor Swift - Love Story - TaylorSwiftVEVO.mp3'
+import img22 from '../assets/music/BẮC BLING (BẮC NINH)  OFFICIAL MV  HOÀ MINZY ft NS XUÂN HINH x MASEW x TUẤN CRY - Hòa Minzy.mp3'
 const items = ref([
     { image: img1 },
     { image: img2 },
@@ -201,10 +205,10 @@ const props = defineProps({
 
 // Tính toán danh sách bài hát hiển thị
 const songs = computed(() => [
-    { id: 4, image: img5, title: 'ただ君に晴れ' },
-    { id: 5, image: img6, title: 'What is Love?' },
-    { id: 6, image: img7, title: 'Love Story' },
-    { id: 7, image: img8, title: 'Bắc Bling' }
+    { id: 4, image: img5, title: 'ただ君に晴れ', audio: img19 },
+    { id: 5, image: img6, title: 'What is Love?', audio:  img20},
+    { id: 6, image: img7, title: 'Love Story', audio:  img21},
+    { id: 7, image: img8, title: 'Bắc Bling', audio:  img22}
 ])
 
 const artists = computed(() => [
@@ -215,7 +219,12 @@ const artists = computed(() => [
 ])
 
 import { useFavoritesStore } from '../favorites.js'
+import { usePlayerStore } from '../player.js'
 
+const audioPlayer = usePlayerStore()
+function audioPlay(song) {
+  audioPlayer.playSong(song)
+}
 const favoritesStore = useFavoritesStore()
 const favoriteSongs = computed(() => favoritesStore.favorites)
 const favoriteArtists = computed(() => favoritesStore.favoriteArtist)
@@ -227,7 +236,6 @@ function addToFavorites(song) {
 function addArtists(artist) {
   favoritesStore.addFavoriteArtist(artist)
 }
-
 </script>
 
 <style scoped>

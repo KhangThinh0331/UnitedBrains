@@ -1,9 +1,9 @@
 <template>
     <section class="container row-g3"
-        style="background-color: #f2f1ff; max-width: 100%; margin-top: 0; padding-top: 0;">
+        style="background-color: transparent; max-width: 100%; margin-top: 0; padding-top: 0;">
         <div class="row">
             <aside class="col-sm-4 p-5 rounded-3"
-                style="background-color: #3f3d56; margin-top: 50px; margin-bottom: 50px;">
+                style="background-color: rgba(0, 0, 0, 0.7); margin-top: 50px; margin-bottom: 50px;">
 
                 <!-- Tabs -->
                 <ul class="nav nav-tabs" id="favoriteTabs" role="tablist">
@@ -74,7 +74,7 @@
 
             </aside>
             <article class="col-sm-8 p-5">
-                <div class="card p-3" style="background-color: #3f3d56; color: #fff;">
+                <div class="card p-3" style="background-color: rgba(0, 0, 0, 0.7); color: #fff;">
                     <div v-if="song" class="song-detail"
                         style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
                         <img :src="song.image" alt="" class="rounded"

@@ -1,12 +1,9 @@
-<script setup>
-</script>
-
 <template>
   <div class="container-fluid">
     <nav class="navbar navbar-expand-sm">
       <div class="container-fluid">
         <router-link class="navbar-brand" to="/">
-          <img src="./assets/images/musicLogo.png" alt="Logo" style="width: 150px;" />
+          <img src="./assets/images/musicLogo.png" alt="Logo" style="width: 100px; border-radius: 50px;" />
         </router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
           <span class="navbar-toggler-icon"></span>
@@ -61,28 +58,46 @@
       </div>
     </footer>
   </div>
+  <Audio />
 </template>
 
 <script setup>
 import { useAuthStore } from './authStore' // đường dẫn tới store của bạn
 const authStore = useAuthStore()
+import Audio from './components/AudioPlayer.vue'
 </script>
 
 <style scoped>
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #f4f4f9;
+  /* background-color: #f4f4f9; */
   color: #333;
 }
 
 .navbar {
-  background-color: #3f3d56 !important;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* background-color: #3f3d56 !important; */
   font-size: large;
+  border-radius: 20px;
+  margin-top: 10px;
+}
+
+.navbar-brand{
+  /* height: 50px;
+  width: 50px; */
+}
+
+.nav-link{
+  margin-left: 10px;
 }
 
 .nav-link,
 .dropdown-item {
   color: #ffffff !important;
+}
+
+.nav-item{
+  margin-left: 10px;
 }
 
 .dropdown-menu {
@@ -99,15 +114,39 @@ body {
 }
 
 .footer {
-  background-color: #3f3d56;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  border-radius: 20px;
+  height: 120px;
+}
+
+.footer .social-links {
+  display: flex;
+  gap: 20px; /* Khoảng cách giữa các icon */
+  margin-bottom: 10px;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer a {
   color: #ffffff;
-  transition: color 0.3s ease;
+  transition: transform 0.3s ease, color 0.3s ease;
+  font-size: 1.3rem;
 }
 
 .footer a:hover {
   color: #ffcc00;
+  transform: scale(1.2);
+}
+
+.footer p,
+.footer small {
+  margin: 2px 0;
+  color: #ffffff;
 }
 </style>

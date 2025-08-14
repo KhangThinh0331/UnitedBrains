@@ -63,7 +63,8 @@ html, body, #app {
   padding: 0;
   width: 100%;
   min-height: 100vh;
-  background-color: #f8f9fa; /* màu nền sáng */
+  background-color: #f8f9fa;
+  background-image: url(./assets/images/harudorobou.jpg); /* màu nền sáng */
 }
 
 #app {
