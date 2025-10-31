@@ -4,6 +4,7 @@ import com.java04.entity.Favorite;
 import com.java04.utils.XJPA;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -83,6 +84,19 @@ public class FavoriteDAOImpl implements FavoriteDAO {
         return em.createQuery(jpql, Favorite.class)
                 .setParameter("vid", videoId)
                 .getResultList();
+    }
+
+    @Override
+    public Favorite findByUserAndVideo(String userId, String videoId) {
+        String jpql = "SELECT f FROM Favorite f WHERE f.user.id = :uid AND f.video.id = :vid";
+        try {
+            return em.createQuery(jpql, Favorite.class)
+                    .setParameter("uid", userId)
+                    .setParameter("vid", videoId)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }
 

@@ -20,5 +20,7 @@ public interface FavoriteDAO {
     List<Object[]> getVideoFavoritesSummary();
 
     List<Favorite> getUsersByVideoId(String videoId);
+
+    Favorite findByUserAndVideo(String userId, String videoId);
 }
 
