@@ -189,7 +189,7 @@
             <span>Register</span>
         </div>
         <c:url var="url" value="/register"></c:url>
-        <form id="registerForm" action="${url}" method="post" class="mt-4">
+        <form id="registerForm" action="${url}" method="post" class="mt-4" novalidate>
             <div class="mb-3 position-relative">
                 <span class="input-group-text"><i class="bi bi-person"></i></span>
                 <input type="text" name="username" class="form-control" placeholder="Username" required>
@@ -212,6 +212,7 @@
             <p class="text-center mt-3 mb-0">Already have an account?
                 <a id="loginLink" href="${pageContext.request.contextPath}/login">Login</a>
             </p>
+            <span class="message">${message}</span>
         </form>
     </div>
 </div>

@@ -12,12 +12,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet({"/"})
+@WebServlet({"/","/home/user","/home/admin"})
 public class IndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        VideoDAO vdao = new VideoDAOImpl();
-        List<Video> videos =  vdao.findAll();
-        request.setAttribute("videos", videos);
-        request.getRequestDispatcher("/WEB-INF/jsp/home/index.jsp").forward(request, response);
+        String uri = request.getRequestURI();
+        if (uri.endsWith("/")) {
+            VideoDAO vdao = new VideoDAOImpl();
+            List<Video> videos = vdao.findAll();
+            request.setAttribute("videos", videos);
+            request.getRequestDispatcher("/WEB-INF/jsp/home/index.jsp").forward(request, response);
+        }
+        if (uri.contains("/home/user")) {
+            request.getRequestDispatcher("/WEB-INF/jsp/home/userHome.jsp").forward(request, response);
+        }
+        if (uri.contains("/home/admin")) {
+            request.getRequestDispatcher("/WEB-INF/jsp/home/home.jsp").forward(request, response);
+        }
     }
 }

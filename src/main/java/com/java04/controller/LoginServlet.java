@@ -137,18 +137,13 @@ import java.util.List;
 @WebServlet({"/login", "/changePassword", "/logout", "/register"})
 public class LoginServlet extends HttpServlet {
     // Khai báo nhưng không khởi tạo ngay để tránh lỗi khởi tạo servlet
-    private UsersDAO  usersDAO;
+    public UsersDAO  usersDAO;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         // Khởi tạo usersDAO khi cần thiết
-        try {
+        if (usersDAO == null) {
             usersDAO = new UsersDAOImpl();
-        } catch (Exception e) {
-            // Xử lý lỗi khởi tạo DAO (thường do lỗi kết nối cơ sở dữ liệu)
-            req.setAttribute("error", "Database connection error: " + e.getMessage());
-            req.getRequestDispatcher("/WEB-INF/jsp/login/login.jsp").forward(req, resp);
-            return;
         }
 
         String uri = req.getRequestURI();
@@ -170,16 +165,11 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         // Khởi tạo usersDAO khi cần thiết
-        try {
+        if (usersDAO == null) {
             usersDAO = new UsersDAOImpl();
-        } catch (Exception e) {
-            // Xử lý lỗi khởi tạo DAO (thường do lỗi kết nối cơ sở dữ liệu)
-            req.setAttribute("error", "Database connection error: " + e.getMessage());
-            req.getRequestDispatcher("/WEB-INF/jsp/login/login.jsp").forward(req, resp);
-            return;
-        };
+        }
 
         String uri = req.getRequestURI();
 
@@ -191,7 +181,36 @@ public class LoginServlet extends HttpServlet {
                 String password = req.getParameter("password");
                 String fullname = req.getParameter("fullname");
                 String email = req.getParameter("email");
-
+                if (username == null || username.trim().isEmpty()) {
+                    req.setAttribute("message", "Vui lòng nhập username");
+                    req.getRequestDispatcher("/WEB-INF/jsp/login/accountRegister.jsp").forward(req, resp);
+                    return;
+                }
+                if (fullname == null || fullname.trim().isEmpty()) {
+                    req.setAttribute("message", "Vui lòng nhập fullname");
+                    req.getRequestDispatcher("/WEB-INF/jsp/login/accountRegister.jsp").forward(req, resp);
+                    return;
+                }
+                if (email == null || email.trim().isEmpty()) {
+                    req.setAttribute("message", "Vui lòng nhập email");
+                    req.getRequestDispatcher("/WEB-INF/jsp/login/accountRegister.jsp").forward(req, resp);
+                    return;
+                }
+                if (password == null || password.trim().isEmpty()) {
+                    req.setAttribute("message", "Vui lòng nhập password");
+                    req.getRequestDispatcher("/WEB-INF/jsp/login/accountRegister.jsp").forward(req, resp);
+                    return;
+                }
+                if (!email.matches("\\w+@\\w+(\\.\\w+){1,2}")) {
+                    req.setAttribute("message", "Email sai định dạng");
+                    req.getRequestDispatcher("/WEB-INF/jsp/login/accountRegister.jsp").forward(req, resp);
+                    return;
+                }
+                if (usersDAO.findByIdOrEmail(username) != null) {
+                    req.setAttribute("message", "Username đã tồn tại");
+                    req.getRequestDispatcher("/WEB-INF/jsp/login/accountRegister.jsp").forward(req, resp);
+                    return;
+                }
                 Users user = new Users();
                 user.setId(username);
                 user.setPassword(password); // Nên mã hóa mật khẩu trước khi lưu
@@ -215,15 +234,26 @@ public class LoginServlet extends HttpServlet {
                 // Lấy thông tin từ form đăng nhập
                 String username = req.getParameter("username");
                 String password = req.getParameter("password");
-
+                if (username == null || username.trim().isEmpty()) {
+                    req.setAttribute("message", "Vui lòng nhập username");
+                    req.getRequestDispatcher("/WEB-INF/jsp/login/accountRegister.jsp").forward(req, resp);
+                    return;
+                }
+                if (password == null || password.trim().isEmpty()) {
+                    req.setAttribute("message", "Vui lòng nhập password");
+                    req.getRequestDispatcher("/WEB-INF/jsp/login/accountRegister.jsp").forward(req, resp);
+                    return;
+                }
                 Users user = usersDAO.findByIdOrEmail(username);
 
                 if (user == null) {
                     req.setAttribute("message", "Invalid username");
                     req.getRequestDispatcher("/WEB-INF/jsp/login/login.jsp").forward(req, resp);
+                    return;
                 } else if (!user.getPassword().equals(password)) {
                     req.setAttribute("message", "Invalid password");
                     req.getRequestDispatcher("/WEB-INF/jsp/login/login.jsp").forward(req, resp);
+                    return;
                 } else {
                     HttpSession session = req.getSession();
                     session.setAttribute("user", user);
@@ -232,15 +262,13 @@ public class LoginServlet extends HttpServlet {
 
                     String targetPage;
                     if (Boolean.TRUE.equals(role)) {
-                        targetPage = "/WEB-INF/jsp/home/home.jsp";
+                        resp.sendRedirect(req.getContextPath() + "/home/admin");
                     } else {
                         VideoDAO vdao = new VideoDAOImpl();
                         List<Video> videos =  vdao.findAll();
                         req.setAttribute("videos", videos);
-                        targetPage = "/WEB-INF/jsp/home/userHome.jsp";
+                        resp.sendRedirect(req.getContextPath() + "/home/user");
                     }
-
-                    req.getRequestDispatcher(targetPage).forward(req, resp);
 
 
                 }

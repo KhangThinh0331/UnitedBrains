@@ -142,7 +142,7 @@
     <button type="button" id="backBtn"><i class="bi bi-arrow-left"></i></button>
     <div class="login_header"><span>Login</span></div>
     <c:url var="url" value="/login"></c:url>
-    <form id="loginForm" action="${url}" method="post" class="mt-4">
+    <form id="loginForm" action="${url}" method="post" class="mt-4" novalidate>
       <div class="mb-3 position-relative">
         <span class="input-group-text"><i class="bi bi-person"></i></span>
         <input type="text" name="username" class="form-control" placeholder="Username" required>
@@ -155,7 +155,7 @@
       <p class="text-center mt-3 mb-0">Don't have an account?
         <a id="registerLink" href="${pageContext.request.contextPath}/register">Register</a>
       </p>
-      <i>${message}</i>
+      <span class="message">${message}</span>
     </form>
   </div>
 </div>

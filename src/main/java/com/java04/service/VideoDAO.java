@@ -22,4 +22,6 @@ public interface VideoDAO {
     List<Video> getVideosWithShares();
 
     void incrementViews(String videoId);
+
+    Video findByLink(String link);
 }

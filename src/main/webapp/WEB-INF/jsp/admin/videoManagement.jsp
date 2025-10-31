@@ -172,7 +172,7 @@
                     <button type="submit" class="btn btn-warning" name="action" value="reset">Reset</button>
                 </div>
             </form>
-            <i>${message}</i>
+            <span class="message">${message}</span>
 
         </div>
 

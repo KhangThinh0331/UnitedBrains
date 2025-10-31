@@ -4,6 +4,7 @@ import com.java04.entity.Video;
 import com.java04.utils.XJPA;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -96,6 +97,18 @@ public class VideoDAOImpl implements VideoDAO {
         } catch (Exception e) {
             em.getTransaction().rollback();
             throw e;
+        }
+    }
+
+    @Override
+    public Video findByLink(String keyword) {
+        String jpql = "SELECT v FROM Video v WHERE v.link = :keyword";
+        TypedQuery<Video> query = em.createQuery(jpql, Video.class);
+        try {
+            query.setParameter("keyword", keyword);
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
         }
     }
 }

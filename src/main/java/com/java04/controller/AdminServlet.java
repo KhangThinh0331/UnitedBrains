@@ -30,7 +30,7 @@ import java.util.List;
 })
 public class AdminServlet extends HttpServlet {
 
-    private final VideoDAO vdao = new VideoDAOImpl();
+    public VideoDAO vdao = new VideoDAOImpl();
     private final UsersDAO udao = new UsersDAOImpl();
     private final FavoriteDAO fdao = new FavoriteDAOImpl();
     private final ShareDAO sdao = new ShareDAOImpl();
@@ -123,7 +123,7 @@ public class AdminServlet extends HttpServlet {
         }
     }
 
-    private void handleVideoManagementPost(HttpServletRequest request, HttpServletResponse response)
+    public void handleVideoManagementPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String action = request.getParameter("action");
@@ -148,6 +148,16 @@ public class AdminServlet extends HttpServlet {
                 case "create":
                     if (id == null || id.trim().isEmpty()) {
                         request.setAttribute("message", "ID cannot be empty when creating a new video.");
+                    } else if (title == null || title.trim().isEmpty()) {
+                        request.setAttribute("message", "Title cannot be empty.");
+                    } else if (link == null || link.trim().isEmpty()) {
+                        request.setAttribute("message", "Link cannot be empty.");
+                    } else if (vdao.findById(id) != null) {
+                        request.setAttribute("message", "ID already exists.");
+                    } else if (id.length() > 10) {
+                        request.setAttribute("message", "Video created failed!");
+                    } else if (vdao.findByLink(link) != null) {
+                        request.setAttribute("message", "Link already exists.");
                     } else {
                         video.setViews(0);
                         vdao.create(video);
