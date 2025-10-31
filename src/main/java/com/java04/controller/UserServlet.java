@@ -126,12 +126,16 @@ public class UserServlet extends HttpServlet {
 
                 if (video != null) {
 
-                    Favorite f = new Favorite();
-                    f.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
-                    f.setUser(user);
-                    f.setVideo(video);
-                    f.setLikeDate(new Date());
-                    fdao.create(f);
+                    Favorite existingFavorite = fdao.findByUserAndVideo(user.getId(), videoId);
+
+                    if (existingFavorite == null) {
+                        Favorite f = new Favorite();
+                        f.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
+                        f.setUser(user);
+                        f.setVideo(video);
+                        f.setLikeDate(new Date());
+                        fdao.create(f);
+                    }
                 }
             }
 
